@@ -8,11 +8,12 @@ import {environment} from '../environments/environment';
 import {NavbarComponent} from './navbar/navbar.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HomeComponent} from './home/home.component';
+import {FooterComponent} from './footer/footer.component';
 
 
 @NgModule({
     declarations: [
-        AppComponent, NavbarComponent, HomeComponent
+        AppComponent, NavbarComponent, HomeComponent, FooterComponent
     ],
     imports: [
         BrowserModule,
