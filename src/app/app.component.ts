@@ -6,8 +6,5 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
   templateUrl: 'app.component.html',
 })
 export class AppComponent {
-  items: FirebaseListObservable<any[]>;
-  constructor(db: AngularFireDatabase) {
-    this.items = db.list('/people/-KtzwQ7WwX54KIwQV4Fy');
-  }
+  title = 'Olympic Tin học văn phòng';
 }

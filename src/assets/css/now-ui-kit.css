@@ -1377,7 +1377,7 @@
 .navbar .navbar-nav>a.btn {
     border-width: 2px;
     font-weight: 400;
-    font-size: 0.8571em;
+    font-size: 15px;
     line-height: 1.35em;
     margin: 5px 1px;
     border: none;
@@ -2006,7 +2006,7 @@ fieldset[disabled] .btn-danger.active {
 .show>.btn-neutral.dropdown-toggle,
 .show>.btn-neutral.dropdown-toggle:focus,
 .show>.btn-neutral.dropdown-toggle:hover {
-    background-color: #FFFFFF;
+    background-color: #daf5e0;
     color: #FFFFFF;
     box-shadow: none;
 }
@@ -3142,8 +3142,13 @@ h1 small,
 
 h2,
 .h2 {
-    font-size: 2.5em;
+    font-size: 30px;
     margin-bottom: 30px;
+    line-height: 33px;
+    color: #666666;
+    text-align: center;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-weight: 200;
 }
 
 h3,
@@ -3183,7 +3188,7 @@ h6,
 }
 
 p {
-    line-height: 1.61em;
+    line-height: 23px;
 }
 
 .description p,
@@ -3289,7 +3294,7 @@ p.description {
 body {
     color: #2c2c2c;
     font-size: 14px;
-    font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
 }
@@ -3571,11 +3576,12 @@ body {
 }
 
 .navbar {
-    padding-top: 0.625rem;
-    padding-bottom: 0.625rem;
-    min-height: 53px;
-    margin-bottom: 20px;
+    padding-top: 0;
+    padding-bottom: 0;
+    min-height: 80px;
+    margin-bottom: 0px;
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.15);
+    height: 80px;
 }
 
 .navbar a {
@@ -3583,13 +3589,13 @@ body {
 }
 
 .navbar a:not(.btn):not(.dropdown-item) {
-    color: #FFFFFF;
+    color: #333333;
 }
 
 .navbar p {
     display: inline-block;
     margin: 0;
-    line-height: 21px;
+    line-height: 20px;
 }
 
 .navbar .navbar-nav.navbar-logo {
@@ -3602,7 +3608,9 @@ body {
 }
 
 .navbar .navbar-nav .nav-link.btn {
-    padding: 11px 22px;
+    /* padding: 25px 20px; */
+    /* text-transform: uppercase; */
+    height: 100%;
 }
 
 .navbar .navbar-nav .nav-link.btn.btn-lg {
@@ -3614,10 +3622,11 @@ body {
 }
 
 .navbar .navbar-nav .nav-link:not(.btn) {
-    text-transform: uppercase;
-    font-size: 0.7142em;
-    padding: 0.5rem 0.7rem;
-    line-height: 1.625rem;
+    /* text-transform: uppercase; */
+    font-size: 15px;
+    /* padding: 25px 10px; */
+    line-height: 20px;
+    height: 100%;
 }
 
 .navbar .navbar-nav .nav-link:not(.btn) i.fa+p,
@@ -3653,8 +3662,9 @@ body {
 .navbar .navbar-nav .nav-item .nav-link:not(.btn):focus,
 .navbar .navbar-nav .nav-item .nav-link:not(.btn):hover,
 .navbar .navbar-nav .nav-item .nav-link:not(.btn):active {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: #daf5e0;
     border-radius: 0.1875rem;
+    color: #333333 !important;
 }
 
 .navbar .logo-container {
@@ -3669,8 +3679,8 @@ body {
 .navbar .navbar-brand {
     text-transform: uppercase;
     font-size: 0.8571em;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: 0;
+    padding-bottom: 0;
     line-height: 1.625rem;
 }
 
@@ -3679,6 +3689,12 @@ body {
     height: 27px;
     outline: 0;
     cursor: pointer;
+    /* color: black; */
+    /* border: solid; */
+}
+
+button.navbar-toggler.navbar-toggler {
+    /* background-image: url("data:image/svg+xml;.."); */
 }
 
 .navbar .navbar-toggler.navbar-toggler-left {
@@ -3732,6 +3748,10 @@ body {
 
 .bg-primary {
     background-color: #f96332 !important;
+}
+
+nav.navbar.navbar-expand-lg.bg-primary.fixed-top {
+    background-color: white!important;
 }
 
 .bg-info {
@@ -4043,6 +4063,15 @@ body {
 img {
     max-width: 100%;
     border-radius: 1px;
+}
+
+.hoangdd-banner {
+    margin-bottom: 40px;
+}
+
+#hoangdd-body .navbar img {
+    width: auto;
+    height: 80px;
 }
 
 .img-raised {
@@ -5615,6 +5644,7 @@ Created using IcoMoon - icomoon.io
     background-size: cover;
     box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.3);
     border-radius: .25rem;
+
 }
 
 .section-story-overview .image-container+.category {
@@ -5634,7 +5664,7 @@ Created using IcoMoon - icomoon.io
 }
 
 .section-story-overview .image-container:nth-child(2) {
-    margin-top: 420px;
+    margin-top: 100px;
     margin-left: -105px;
 }
 
@@ -6024,7 +6054,7 @@ Created using IcoMoon - icomoon.io
         /* For Opera 11.1 to 12.0 */
         background: -moz-linear-gradient(#f96332 0%, #000 80%);
         /* For Firefox 3.6 to 15 */
-        background: linear-gradient(#f96332 0%, #000 80%);
+        background: linear-gradient(#28a745 0%, #000 80%);
         /* Standard syntax (must be last) */
         opacity: 0.76;
         filter: alpha(opacity=76);
@@ -6114,7 +6144,7 @@ Created using IcoMoon - icomoon.io
         width: 22px;
         height: 1px;
         border-radius: 1px;
-        background: #FFFFFF;
+        background: #000000;
     }
     .sidebar-collapse .navbar .navbar-toggler-bar+.navbar-toggler-bar {
         margin-top: 7px;
@@ -7388,6 +7418,10 @@ Created using IcoMoon - icomoon.io
     .navbar-nav .nav-item:not(:last-child) {
         margin-right: 5px;
     }
+
+    li.nav-item:hover {
+        /* color: black; */
+    }
     .section-nucleo-icons .icons-container {
         margin: 0 0 0 auto;
     }
@@ -7532,4 +7566,8 @@ Created using IcoMoon - icomoon.io
         top: 50%;
         transform: translateY(-50%);
     }
+}
+.hoangdd-container{
+    position: relative;
+    top: 80px;
 }
