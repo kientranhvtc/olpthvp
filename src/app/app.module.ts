@@ -13,10 +13,13 @@ import {UsersListComponent} from './userslist/userslist.component';
 import {RegisterComponent} from './register/register.component';
 import {DatabaseComponent} from './database/database.component';
 import {FormsModule} from '@angular/forms';
+import {LoadingComponent} from './loading/loading.component';
+import {SharedService} from './services/shared-service';
 
 @NgModule({
     declarations: [
-        AppComponent, NavbarComponent, HomeComponent, FooterComponent, UsersListComponent, RegisterComponent, DatabaseComponent
+        AppComponent, NavbarComponent, HomeComponent, FooterComponent, UsersListComponent,
+        RegisterComponent, DatabaseComponent, LoadingComponent
     ],
     imports: [
         BrowserModule,
@@ -26,7 +29,7 @@ import {FormsModule} from '@angular/forms';
         AppRoutingModule,
         FormsModule
     ],
-    providers: [],
+    providers: [SharedService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

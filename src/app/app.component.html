@@ -1,5 +1,10 @@
 <!--<app-navbar></app-navbar>-->
 <div class="hoangdd-container">
+    <!--<router-outlet></router-outlet>-->
     <router-outlet></router-outlet>
     <!--<app-footer></app-footer>-->
 </div>
+<button (click)="toggleLoading()">Click me</button>
+<app-loading [isLoading]="isShowLoading"></app-loading>
+
+

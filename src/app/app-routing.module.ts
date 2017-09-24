@@ -6,7 +6,7 @@ import {DatabaseComponent} from './database/database.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/userslist', pathMatch: 'full' },
+  /*{ path: '', redirectTo: '/userslist', pathMatch: 'full' },*/
   { path: 'home',  component: HomeComponent },
   { path: 'userslist', component: UsersListComponent },
   {path: 'database', component: DatabaseComponent}
