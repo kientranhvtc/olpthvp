@@ -1,25 +1,18 @@
 import {Component, Input, Output} from '@angular/core';
 import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
-import {SharedService} from './services/shared-service';
+import {LoadingService} from './services/loading-service';
 
 @Component({
     selector: 'app-root',
     templateUrl: 'app.component.html',
 })
 export class AppComponent {
-    @Input() isShowLoading = false;
+    @Input() isAppLoading = false;
 
-    constructor(private _sharedService: SharedService) {
+    constructor(private _sharedService: LoadingService) {
         _sharedService.changeEmitted$.subscribe(
-            text => {
-                this.toggleLoading();
-                console.log(text);
+            value => {
+                this.isAppLoading = value;
             });
-    }
-
-    title = 'Olympic Tin học văn phòng';
-
-    toggleLoading(): void {
-        this.isShowLoading = true;
     }
 }

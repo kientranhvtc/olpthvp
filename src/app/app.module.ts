@@ -14,7 +14,7 @@ import {RegisterComponent} from './register/register.component';
 import {DatabaseComponent} from './database/database.component';
 import {FormsModule} from '@angular/forms';
 import {LoadingComponent} from './loading/loading.component';
-import {SharedService} from './services/shared-service';
+import {LoadingService} from './services/loading-service';
 
 @NgModule({
     declarations: [
@@ -29,7 +29,7 @@ import {SharedService} from './services/shared-service';
         AppRoutingModule,
         FormsModule
     ],
-    providers: [SharedService],
+    providers: [LoadingService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

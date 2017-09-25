@@ -2,13 +2,13 @@ import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 @Injectable()
-export class SharedService {
+export class LoadingService {
     // Observable string sources
-    private emitChangeSource = new Subject<any>();
+    private emitChangeSource = new Subject<boolean>();
     // Observable string streams
     changeEmitted$ = this.emitChangeSource.asObservable();
     // Service message commands
-    emitChange(change: any) {
+    emitChange(change: boolean) {
         this.emitChangeSource.next(change);
     }
 }

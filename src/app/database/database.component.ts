@@ -1,24 +1,27 @@
 /**
  * Created by hoangdaoduc on 9/23/17.
  */
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
 import {Room} from '../model/room.model';
 import {Section} from '../model/section.model';
 import {forEach} from '@angular/router/src/utils/collection';
-import {SharedService} from '../services/shared-service';
+import {LoadingService} from '../services/loading-service';
 @Component({
     selector: 'app-database',
     templateUrl: 'database.component.html',
 })
-export class DatabaseComponent {
-    roomsRef: FirebaseListObservable<any[]>;
+export class DatabaseComponent implements OnInit {
+    roomsRef: FirebaseListObservable<Room[]>;
     rooms: Room[];
     sectionsRef: FirebaseListObservable<Section[]>;
     sections: Section[];
 
 
-    constructor(private db: AngularFireDatabase, private _sharedService: SharedService) {
+    constructor(private db: AngularFireDatabase, private _loadingService: LoadingService) {
+    }
+
+    ngOnInit() {
         this.roomsRef = this.db.list('/rooms', {preserveSnapshot: false});
         this.roomsRef.subscribe(snapshots => {
             this.rooms = snapshots;
@@ -30,7 +33,6 @@ export class DatabaseComponent {
     }
 
     initRooms(): void {
-
         this.roomsRef.remove()
             .then(() => this.roomsRef.push(new Room('106 PM', 40)))
             .then(() => this.roomsRef.push(new Room('106 TV', 40)))
@@ -51,10 +53,26 @@ export class DatabaseComponent {
     }
 
     saveRooms(): void {
-        // this.roomsRef.update(this.roomsRef.val());
-        // console.log(this.roomsRef.key);
-        alert('he2');
-        this._sharedService.emitChange('Data from child');
+        this._loadingService.emitChange(true);
+        const updateRoomsData = {};
+        this.rooms.forEach((room) => {
+            updateRoomsData[room.$key] = room;
+        });
+        this.db.object('/rooms').update(updateRoomsData).then(() => {
+            this._loadingService.emitChange(false);
+        });
+    }
+
+    saveSections(): void {
+        this._loadingService.emitChange(true);
+        const updateSectionsData = {};
+        this.sections.forEach((section) => {
+            updateSectionsData[section.$key] = section;
+        });
+        console.log(updateSectionsData);
+        this.db.object('/sections').update(updateSectionsData).then(() => {
+            this._loadingService.emitChange(false);
+        });
     }
 
 }
