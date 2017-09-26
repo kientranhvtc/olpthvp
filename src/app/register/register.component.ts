@@ -4,28 +4,25 @@
 import {Component, OnInit} from '@angular/core';
 import {Section} from '../model/section.model';
 import {User} from '../model/user.model';
+import {AngularFireDatabase} from 'angularfire2/database';
+import {LoadingService} from '../services/loading-service';
 
 @Component({
     selector: 'app-register',
     templateUrl: 'register.component.html',
 })
 export class RegisterComponent implements OnInit {
-    sections: Section[] = [new Section('Ca 1', 15), new Section('Ca 2', 30)];
-    user: User = new User('hoangdd87@gmail.com', 'Đào Đức Hoàng',
-        'K43/41.01', 'K43/41.01LT', '0989596889', 'key1', 'key1');
+    sections: Section[] = [];
+    user: User = new User('', '', '', '', '', '', '');
 
-    constructor() {
-        this.sections[0].$key = 'key0';
-        this.sections[1].$key = 'key1';
+    constructor(private db: AngularFireDatabase, private _loadingService: LoadingService) {
     }
 
 
     ngOnInit(): void {
-    }
-
-    checkEmail(email: string): boolean {
-        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email);
+        this.db.list('/sections', {preserveSnapshot: false}).subscribe((snapshots) => {
+            this.sections = snapshots;
+        });
     }
 
 }
