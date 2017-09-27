@@ -1,9 +1,9 @@
 <div class="container">
     <div class="section">
-        <h1>Đăng ký dự thi</h1>
+        <h1>Đăng ký dự thi {{user.hidePhoneNumber}}</h1>
         <div class="row">
             <div class="col-md-10 col-lg-8 mx-auto">
-                <form #registerForm="ngForm">
+                <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
                     <div class="form-group">
                         <label for="email">Email:</label>
                         <input type="email" class="form-control" id="email" name="email" [(ngModel)]="user.email"
@@ -24,8 +24,7 @@
                     <div class="form-group">
                         <label for="phoneNumber">Số điện thoại</label>
                         <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber"
-                               [(ngModel)]="user.phoneNumber"
-                               #phoneNumber="ngModel" required>
+                               [(ngModel)]="user.phoneNumber" #phoneNumber="ngModel" pattern=".{8,15}" required>
                         <div [hidden]="(phoneNumber.valid || phoneNumber.pristine)" class="alert alert-danger">
                             Bạn phải nhập số điện thoại
                         </div>
@@ -50,6 +49,7 @@
                                 {{section.sectionName}} còn {{section.maxSection - section.numberAttend}} vị trí trống
                             </option>
                         </select>
+
                         <div [hidden]="(section.valid || section.pristine)" class="alert alert-danger">
                             Bạn phải chọn một ca thi còn có vị trí trống
                         </div>

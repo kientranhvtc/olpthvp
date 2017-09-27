@@ -11,6 +11,11 @@ export class User {
     public roomKey: string;
     public sectionKey: string;
 
+    public get hidePhoneNumber(): string {
+        return this.phoneNumber.substring(0, this.phoneNumber.length - 3) + 'xxx';
+
+    }
+
     constructor(email: string, fullName: string, lopNc: string, lopTc: string, phoneNumber: string, roomKey: string, sectionKey: string) {
         this.email = email;
         this.fullName = fullName;
