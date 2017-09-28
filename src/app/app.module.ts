@@ -15,11 +15,14 @@ import {DatabaseComponent} from './database/database.component';
 import {FormsModule} from '@angular/forms';
 import {LoadingComponent} from './loading/loading.component';
 import {LoadingService} from './services/loading-service';
+import {BootstrapModalModule} from 'ng2-bootstrap-modal';
+import {ConfirmComponent} from './confirm/confirm.component';
 
 @NgModule({
     declarations: [
         AppComponent, NavbarComponent, HomeComponent, FooterComponent, UsersListComponent,
-        RegisterComponent, DatabaseComponent, LoadingComponent
+        RegisterComponent, DatabaseComponent, LoadingComponent,
+        ConfirmComponent
     ],
     imports: [
         BrowserModule,
@@ -28,6 +31,10 @@ import {LoadingService} from './services/loading-service';
         AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
         AppRoutingModule,
         FormsModule,
+        BootstrapModalModule.forRoot({container: document.body})
+    ],
+    entryComponents: [
+        ConfirmComponent
     ],
     providers: [LoadingService],
     bootstrap: [AppComponent]

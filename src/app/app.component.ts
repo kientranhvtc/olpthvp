@@ -1,6 +1,8 @@
 import {Component, Input, Output} from '@angular/core';
 import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
 import {LoadingService} from './services/loading-service';
+import {DialogService} from 'ng2-bootstrap-modal';
+import {ConfirmComponent} from './confirm/confirm.component';
 
 @Component({
     selector: 'app-root',
