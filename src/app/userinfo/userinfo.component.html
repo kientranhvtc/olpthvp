@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="section">
+        <h3 style="text-align: center">Thông tin người dùng</h3>
+        <div class="row">
+            <div class="col-md-10 col-lg-8 mx-auto">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" [ngModel]="user.email" disabled
+                       #email="ngModel">
+                <div class="hoangdd-margintop12">
+                    <button class="btn btn-primary btn-simple">Đổi mật khẩu</button>
+                    <button class="btn btn-primary btn-simple">Đăng xuất</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

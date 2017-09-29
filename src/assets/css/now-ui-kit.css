@@ -2,6 +2,10 @@
 
 }
 
+.hoangdd-margintop12 {
+    margin-top: 12px;
+}
+
 .hoangdd-address-item {
     line-height: 23px;
 }
@@ -10688,6 +10692,10 @@ small {
 
 a {
     color: #f96332;
+}
+
+.hoangdd-link-userinfo {
+    padding: 12px;
 }
 
 a:hover,

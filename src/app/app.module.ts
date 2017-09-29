@@ -17,12 +17,15 @@ import {LoadingComponent} from './loading/loading.component';
 import {LoadingService} from './services/loading-service';
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
 import {ConfirmComponent} from './confirm/confirm.component';
+import {UserInfoComponent} from './userinfo/userinfo.component';
+import {ChangePasswordComponent} from './changepassword/changepassword.component';
+import {LoginComponent} from './login/login.component';
 
 @NgModule({
     declarations: [
         AppComponent, NavbarComponent, HomeComponent, FooterComponent, UsersListComponent,
         RegisterComponent, DatabaseComponent, LoadingComponent,
-        ConfirmComponent
+        ConfirmComponent, UserInfoComponent, ChangePasswordComponent, LoginComponent
     ],
     imports: [
         BrowserModule,
