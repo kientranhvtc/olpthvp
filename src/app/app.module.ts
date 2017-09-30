@@ -20,12 +20,13 @@ import {ConfirmComponent} from './confirm/confirm.component';
 import {UserInfoComponent} from './userinfo/userinfo.component';
 import {ChangePasswordComponent} from './changepassword/changepassword.component';
 import {LoginComponent} from './login/login.component';
+import {ResetPasswordComponent} from './resetpassword/resetpassword.component';
 
 @NgModule({
     declarations: [
         AppComponent, NavbarComponent, HomeComponent, FooterComponent, UsersListComponent,
         RegisterComponent, DatabaseComponent, LoadingComponent,
-        ConfirmComponent, UserInfoComponent, ChangePasswordComponent, LoginComponent
+        ConfirmComponent, UserInfoComponent, ChangePasswordComponent, LoginComponent, ResetPasswordComponent
     ],
     imports: [
         BrowserModule,

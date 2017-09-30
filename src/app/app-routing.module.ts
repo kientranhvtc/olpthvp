@@ -7,6 +7,7 @@ import {RegisterComponent} from './register/register.component';
 import {UserInfoComponent} from './userinfo/userinfo.component';
 import {ChangePasswordComponent} from './changepassword/changepassword.component';
 import {LoginComponent} from './login/login.component';
+import {ResetPasswordComponent} from './resetpassword/resetpassword.component';
 
 
 const routes: Routes = [
@@ -18,18 +19,15 @@ const routes: Routes = [
     {path: 'register', component: RegisterComponent},
     {
         path: 'userinfo', component: UserInfoComponent,
-        children: [
-            {
-                path: ':id',
-                component: UserInfoComponent
-            }
-        ]
     },
     {
         path: 'changepassword', component: ChangePasswordComponent
     },
     {
         path: 'login', component: LoginComponent
+    },
+    {
+        path: 'resetpassword', component: ResetPasswordComponent
     }
     /*{ path: 'heroes',     component: HeroesComponent },
      { path: 'admin', component: Admin}*/

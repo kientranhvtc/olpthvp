@@ -1,19 +1,22 @@
 <nav class="navbar navbar-expand-lg bg-primary fixed-top">
     <div class="container">
         <div class="navbar-translate">
-            <a class="navbar-brand" routerLink="/" rel="tooltip" title="" data-placement="bottom" target="_blank" data-original-title="Olympic Tin học văn phòng - Học viện Tài chính">
+            <a class="navbar-brand" routerLink="/" rel="tooltip" title="" data-placement="bottom" target="_blank"
+               data-original-title="Olympic Tin học văn phòng - Học viện Tài chính">
                 <img src="assets/img/logo_olpthvp.png" alt="OLP TIN HỌC VĂN PHÒNG">
             </a>
-            <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
+                    aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-bar bar1"></span>
                 <span class="navbar-toggler-bar bar2"></span>
                 <span class="navbar-toggler-bar bar3"></span>
             </button>
         </div>
-        <div class="collapse navbar-collapse justify-content-end" id="navigation" style="" data-nav-image="./assets/img/blurred-image-1.jpg">
+        <div class="collapse navbar-collapse justify-content-end" id="navigation" style=""
+             data-nav-image="./assets/img/blurred-image-1.jpg">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/" >
+                    <a class="nav-link" routerLink="/">
                         <i class="now-ui-icons business_bank"></i>
                         <p>Trang chủ</p>
                     </a>
@@ -24,14 +27,28 @@
                         <p>Danh sách đăng ký</p>
                     </a>
                 </li>
+                <li class="nav-item" [hidden]="(isUserLogin | async)?isUserLogin: true">
+                    <a class="nav-link" routerLink="/userslist">
+                        <i class="now-ui-icons ui-1_settings-gear-63"></i>
+                        <p>Tài khoản của tôi</p>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link btn btn-neutral" routerLink="/register">
                         <i class="now-ui-icons arrows-1_share-66"></i>
                         <p>Đăng ký dự thi</p>
                     </a>
                 </li>
+                <li class="nav-item" [hidden]="!isUserLogin | async">
+                    <a class="nav-link" routerLink="/login">
+                        <i class="now-ui-icons users_circle-08"></i>
+                        <p>Login</p>
+                    </a>
+                </li>
                 <li class="nav-item">
-                    <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="https://www.facebook.com/CreativeTim" target="_blank" data-original-title="Like us on Facebook">
+                    <a class="nav-link" rel="tooltip" title="" data-placement="bottom"
+                       href="https://www.facebook.com/CreativeTim" target="_blank"
+                       data-original-title="Like us on Facebook">
                         <i class="fa fa-facebook-square"></i>
                         <p class="d-lg-none d-xl-none">Facebook</p>
                     </a>
