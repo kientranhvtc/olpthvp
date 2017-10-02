@@ -27,7 +27,7 @@
                         <p>Danh sách đăng ký</p>
                     </a>
                 </li>
-                <li class="nav-item" [hidden]="(isUserLogin | async)?isUserLogin: true">
+                <li class="nav-item" [hidden]="!user">
                     <a class="nav-link" routerLink="/userslist">
                         <i class="now-ui-icons ui-1_settings-gear-63"></i>
                         <p>Tài khoản của tôi</p>
@@ -39,7 +39,7 @@
                         <p>Đăng ký dự thi</p>
                     </a>
                 </li>
-                <li class="nav-item" [hidden]="!isUserLogin | async">
+                <li class="nav-item" [hidden]="user">
                     <a class="nav-link" routerLink="/login">
                         <i class="now-ui-icons users_circle-08"></i>
                         <p>Login</p>

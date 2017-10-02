@@ -36,6 +36,10 @@ export class LoginComponent implements OnInit {
                     alert('Tài khoản không tồn tại');
                     break;
                 }
+                case `auth/network-request-failed`: {
+                    alert('Lỗi kết nối mạng');
+                    break;
+                }
                 default: {
                     alert('Email hoặc mật khẩu không đúng bạn hãy thử lại');
                     break;

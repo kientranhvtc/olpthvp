@@ -11,18 +11,12 @@ import {Subject} from 'rxjs/Subject';
     templateUrl: 'navbar.component.html',
 })
 export class NavbarComponent {
-    isUserLogin: Subject<boolean> = new Subject();
+    user: firebase.User;
 
     constructor(private afAuth: AngularFireAuth) {
         this.afAuth.auth.onAuthStateChanged(user => {
-            if (user) { // If there is a user logon
-                this.isUserLogin.next(true);
-
-            } else { // If user logout
-                this.isUserLogin.next(false);
-            }
+            this.user = user;
         });
     }
-
 }
 

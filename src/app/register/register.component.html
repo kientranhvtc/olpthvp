@@ -42,8 +42,7 @@
                     <div class="form-group">
                         <label for="section">Chọn ca thi</label>
                         <select class="form-control dropdown" id="section" name="section"
-                                [(ngModel)]="user.sectionKey"
-                                #section="ngModel" required>
+                                [(ngModel)]="user.sectionKey" #section="ngModel" required>
                             <option class="dropdown-item" *ngFor="let section of sections"
                                     [value]="section.maxSection > section.numberAttend ? section.$key:''">
                                 {{section.sectionName}} còn {{section.maxSection - section.numberAttend}} vị trí trống
