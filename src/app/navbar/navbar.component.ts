@@ -3,8 +3,7 @@
  */
 import {Component} from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
+
 
 @Component({
     selector: 'app-navbar',
@@ -17,6 +16,10 @@ export class NavbarComponent {
         this.afAuth.auth.onAuthStateChanged(user => {
             this.user = user;
         });
+    }
+
+    signOut(): void {
+        this.afAuth.auth.signOut();
     }
 }
 

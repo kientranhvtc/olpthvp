@@ -27,7 +27,7 @@
                         <p>Danh sách đăng ký</p>
                     </a>
                 </li>
-                <li class="nav-item" [hidden]="!user">
+                <li class="nav-item" [hidden]="!user" routerLink="userinfo">
                     <a class="nav-link" routerLink="/userslist">
                         <i class="now-ui-icons ui-1_settings-gear-63"></i>
                         <p>Tài khoản của tôi</p>
@@ -47,10 +47,16 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" rel="tooltip" title="" data-placement="bottom"
-                       href="https://www.facebook.com/CreativeTim" target="_blank"
+                       href="https://www.facebook.com/olympictinhocvanphonghvtc/" target="_blank"
                        data-original-title="Like us on Facebook">
                         <i class="fa fa-facebook-square"></i>
                         <p class="d-lg-none d-xl-none">Facebook</p>
+                    </a>
+                </li>
+                <li class="nav-item" [hidden]="!user">
+                    <a class="nav-link btn btn-neutral" (click)="signOut()">
+                        <i class="now-ui-icons 69 arrows-1_share-66"></i>
+                        <p>Đăng xuất</p>
                     </a>
                 </li>
             </ul>

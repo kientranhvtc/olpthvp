@@ -1,13 +1,31 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../model/user.model';
+import {AngularFireDatabase} from 'angularfire2/database';
+import {LoadingService} from '../services/loading-service';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {DialogService} from 'ng2-bootstrap-modal';
+import {Router} from '@angular/router';
 @Component({
-    selector: 'app-register',
+    selector: 'app-userinfo',
     templateUrl: 'userinfo.component.html',
 })
 export class UserInfoComponent implements OnInit {
-    user: User = new User('hoangdd87@gmail.com', 'Đào Đức Hoàng', '43/41.01', '', '0989596889', '', '-Kuxe7mus8V03jlLiIuv');
+    firebaseUser: firebase.User;
+
+    constructor(private db: AngularFireDatabase, private _loadingService: LoadingService,
+                private afAuth: AngularFireAuth, private dialogService: DialogService, private router: Router) {
+    }
 
     ngOnInit(): void {
+        this.afAuth.auth.onAuthStateChanged(user => {
+            this.firebaseUser = user;
+            if (user) {
+                // there is an user login
+            } else {
+                // there is no user login
+                this.router.navigate(['/login']);
+            }
+        });
     }
 
 }
