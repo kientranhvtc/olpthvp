@@ -9,7 +9,7 @@ import * as firebase from 'firebase';
     templateUrl: 'login.component.html',
 })
 export class LoginComponent implements OnInit {
-    user = {email: 'Hoangdd87@gmail.com', password: '123456'};
+    user = {email: '', password: ''};
 
     constructor(private _loadingService: LoadingService, private afAuth: AngularFireAuth, private router: Router) {
 

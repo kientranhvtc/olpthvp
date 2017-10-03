@@ -12,7 +12,7 @@ import {ConfirmComponent} from '../confirm/confirm.component';
 export class ChangePasswordComponent implements OnInit {
     firebaseUser: firebase.User;
     myEmail: string;
-    oldPassword = '123456';
+    oldPassword = '';
     newPassword1 = '';
     newPassword2 = '';
 
@@ -44,23 +44,24 @@ export class ChangePasswordComponent implements OnInit {
         this._loadingService.emitChange(true);
         this.afAuth.auth.signInWithEmailAndPassword(this.myEmail, this.oldPassword).then((currentUser) => {
             // Sign in again successfully
-            currentUser.updatePassword(newPassword).then(() => {
 
+            currentUser.updatePassword(newPassword).then(() => {
+                // Update Password successfully
                 this._loadingService.emitChange(false);
                 const dialog = this.dialogService.addDialog(ConfirmComponent, {
-                    title: 'Đăng ký thành công',
+                    title: 'Đổi mật khẩu thành công',
                     message: `Bạn đã đổi mật khẩu thành công`
                 }).subscribe(() => {
                     // Navigate to userslist after show notification to user
                     this.router.navigate(['/userinfo']);
-
                 });
+            }).catch((error) => {
+                this._loadingService.emitChange(false);
+                alert('Có lỗi xảy ra trong quá trình đổi mật khẩu, bạn hãy thử lại sau');
 
             });
-
-            return;
         }).catch((error: firebase.FirebaseError) => {
-            // Failed in login agian
+            // sign in failed
             this._loadingService.emitChange(false);
             console.log('errorh:' + error.code);
             switch (error.code) {
@@ -80,4 +81,3 @@ export class ChangePasswordComponent implements OnInit {
     }
 
 }
-// Đang làm dở chỗ hiển thị loading chạy chương trình

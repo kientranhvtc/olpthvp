@@ -20,7 +20,7 @@ import {Router} from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
     sections: Section[] = [];
-    user: User = new User('hoangdd87@gmail.com', 'Đào Đức Hoàng', '43/41.01', '', '0989596889', '', '-Kuxe7mus8V03jlLiIuv');
+    user: User = new User('', '', '', '', '', '', '');
 
     constructor(private db: AngularFireDatabase, private _loadingService: LoadingService,
                 private afAuth: AngularFireAuth, private dialogService: DialogService, private router: Router) {
