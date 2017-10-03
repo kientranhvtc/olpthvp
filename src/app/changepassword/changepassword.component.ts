@@ -4,15 +4,18 @@ import {LoadingService} from '../services/loading-service';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {DialogService} from 'ng2-bootstrap-modal';
 import {Router} from '@angular/router';
+import {ConfirmComponent} from '../confirm/confirm.component';
 @Component({
     selector: 'app-changepassword',
     templateUrl: 'changepassword.component.html',
 })
 export class ChangePasswordComponent implements OnInit {
     firebaseUser: firebase.User;
-    old_password: string;
-    new_password1: string;
-    new_password2: string;
+    myEmail: string;
+    oldPassword = '123456';
+    newPassword1 = '';
+    newPassword2 = '';
+
     constructor(private db: AngularFireDatabase, private _loadingService: LoadingService,
                 private afAuth: AngularFireAuth, private dialogService: DialogService, private router: Router) {
     }
@@ -21,12 +24,60 @@ export class ChangePasswordComponent implements OnInit {
         this.afAuth.auth.onAuthStateChanged(user => {
             this.firebaseUser = user;
             if (user) {
+                this.myEmail = user.email;
                 // there is an user login
             } else {
                 // there is no user login
+                this.myEmail = '';
                 this.router.navigate(['/login']);
             }
         });
     }
 
+    onSubmit(): void {
+        const newPassword = (this.newPassword1 === this.newPassword2) ? this.newPassword1 : '';
+        if (!newPassword) {
+            alert('Mật khẩu mới và nhắc lại không khớp với nhau');
+            return;
+        }
+
+        this._loadingService.emitChange(true);
+        this.afAuth.auth.signInWithEmailAndPassword(this.myEmail, this.oldPassword).then((currentUser) => {
+            // Sign in again successfully
+            currentUser.updatePassword(newPassword).then(() => {
+
+                this._loadingService.emitChange(false);
+                const dialog = this.dialogService.addDialog(ConfirmComponent, {
+                    title: 'Đăng ký thành công',
+                    message: `Bạn đã đổi mật khẩu thành công`
+                }).subscribe(() => {
+                    // Navigate to userslist after show notification to user
+                    this.router.navigate(['/userinfo']);
+
+                });
+
+            });
+
+            return;
+        }).catch((error: firebase.FirebaseError) => {
+            // Failed in login agian
+            this._loadingService.emitChange(false);
+            console.log('errorh:' + error.code);
+            switch (error.code) {
+                case `auth/wrong-password`: {
+                    alert('Mật khẩu hiện tại không đúng, bạn hãy thử lại');
+                    break;
+                }
+                default: {
+                    alert('Đã có lỗi xảy ra, bạn hãy thử lại sau');
+                    break;
+                }
+            }
+
+        });
+
+
+    }
+
 }
+// Đang làm dở chỗ hiển thị loading chạy chương trình
