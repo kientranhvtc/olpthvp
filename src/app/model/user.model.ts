@@ -16,6 +16,11 @@ export class User {
 
     }
 
+    public get searchKey(): string {
+        return this.fullName + this.lopNc;
+    }
+
+
     constructor(email: string, fullName: string, lopNc: string, lopTc: string, phoneNumber: string, roomKey: string, sectionKey: string) {
         this.email = email;
         this.fullName = fullName;

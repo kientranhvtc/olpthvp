@@ -3,6 +3,8 @@ import {LoadingService} from '../services/loading-service';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {Router} from '@angular/router';
 import * as firebase from 'firebase';
+import {ConfirmComponent} from '../confirm/confirm.component';
+import {DialogService} from 'ng2-bootstrap-modal';
 
 @Component({
     selector: 'app-login',
@@ -11,7 +13,7 @@ import * as firebase from 'firebase';
 export class LoginComponent implements OnInit {
     user = {email: '', password: ''};
 
-    constructor(private _loadingService: LoadingService, private afAuth: AngularFireAuth, private router: Router) {
+    constructor(private _loadingService: LoadingService, private afAuth: AngularFireAuth, private router: Router, private dialogService: DialogService) {
 
     }
 
@@ -26,25 +28,27 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/userinfo']);
         }).catch((error: firebase.FirebaseError) => {
             this._loadingService.emitChange(false);
-            console.log('error:' + error.code);
+            let strCode = '';
             switch (error.code) {
                 case `auth/wrong-password`: {
-                    alert('Sai mật khẩu, bạn hãy kiểm tra lại')
+                    strCode = ('Sai mật khẩu, bạn hãy kiểm tra lại')
                     break;
                 }
                 case `auth/user-not-found`: {
-                    alert('Tài khoản không tồn tại');
+                    strCode = ('Tài khoản không tồn tại');
                     break;
                 }
                 case `auth/network-request-failed`: {
-                    alert('Lỗi kết nối mạng');
+                    strCode = ('Lỗi kết nối mạng');
                     break;
                 }
                 default: {
-                    alert('Email hoặc mật khẩu không đúng bạn hãy thử lại');
+                    strCode = ('Email hoặc mật khẩu không đúng bạn hãy thử lại');
                     break;
                 }
             }
+            const dialog = this.dialogService.addDialog(ConfirmComponent, { title: 'Lỗi',
+                message: strCode });
 
 
         });

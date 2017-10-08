@@ -12,7 +12,6 @@ export class AppComponent {
     @Input() isAppLoading = false;
 
     constructor(private _sharedService: LoadingService) {
-        console.log('App.component');
         _sharedService.changeEmitted$.subscribe(
             value => {
                 this.isAppLoading = value;

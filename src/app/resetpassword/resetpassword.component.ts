@@ -19,7 +19,7 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.afAuth.auth.signOut().then(() => console.log('he2'));
+        this.afAuth.auth.signOut().then(() => {});
     }
 
     resetPassword(): void {

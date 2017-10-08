@@ -59,32 +59,38 @@ export class RegisterComponent implements OnInit {
                 }).catch((error) => {
                     // Send email verification failed
                     this._loadingService.emitChange(false);
-                    alert('Có lỗi xảy ra trong quá trình gửi email xác nhận');
+                    const dialog = this.dialogService.addDialog(ConfirmComponent, { title: 'Lỗi',
+                        message: `Có lỗi xảy ra trong quá trình gửi email xác nhận` });
 
                 });
             }).catch(() => {
                 // Store data in the database failed
                 this._loadingService.emitChange(false);
-                alert('Bạn đã tạo tài khoản email thành công, nhưng có lỗi trong việc lưu thông tin dự thi. ' +
-                    'Hãy kiểm tra hòm thư để có thêm thông tin');
+                const dialog = this.dialogService.addDialog(ConfirmComponent, { title: 'Lỗi',
+                    message: `Bạn đã tạo tài khoản email thành công, nhưng có lỗi trong việc lưu thông tin dự thi. ' +
+                    'Hãy kiểm tra hòm thư để có thêm thông tin` });
             });
         }).catch((error: firebase.FirebaseError) => {
             // Create user account failed
-            console.log(error.code);
+            // console.log(error.code);
+            this._loadingService.emitChange(false);
+            let strCode = '';
             switch (error.code) {
                 case `auth/email-already-in-use`: {
-                    alert('Email ' + this.user.email + ' đã đăng ký dự thi trước đó, hãy kiểm tra lại email');
+                    strCode = ('Email ' + this.user.email + ' đã đăng ký dự thi trước đó, hãy kiểm tra lại email');
                     break;
                 }
                 case `auth/network-request-failed`: {
-                    alert('Lỗi kết nối mạng bạn hãy thử lại sau');
+                    strCode = ('Lỗi kết nối mạng bạn hãy thử lại sau');
                     break;
                 }
                 default: {
-                    alert('Email hoặc mật khẩu không đúng bạn hãy thử lại');
+                    strCode = ('Email hoặc mật khẩu không đúng bạn hãy thử lại');
                     break;
                 }
             }
+            const dialog = this.dialogService.addDialog(ConfirmComponent, { title: 'Lỗi',
+                message: strCode });
         });
     }
     showConfirm() {

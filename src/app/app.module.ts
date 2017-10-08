@@ -21,12 +21,14 @@ import {UserInfoComponent} from './userinfo/userinfo.component';
 import {ChangePasswordComponent} from './changepassword/changepassword.component';
 import {LoginComponent} from './login/login.component';
 import {ResetPasswordComponent} from './resetpassword/resetpassword.component';
+import {HandleEmailComponent} from './handleemail/handleemail.component';
+import { Ng2FilterPipeModule } from 'ng2-filter-pipe';
 
 @NgModule({
     declarations: [
         AppComponent, NavbarComponent, HomeComponent, FooterComponent, UsersListComponent,
         RegisterComponent, DatabaseComponent, LoadingComponent,
-        ConfirmComponent, UserInfoComponent, ChangePasswordComponent, LoginComponent, ResetPasswordComponent
+        ConfirmComponent, UserInfoComponent, ChangePasswordComponent, LoginComponent, ResetPasswordComponent, HandleEmailComponent
     ],
     imports: [
         BrowserModule,
@@ -35,6 +37,7 @@ import {ResetPasswordComponent} from './resetpassword/resetpassword.component';
         AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
         AppRoutingModule,
         FormsModule,
+        Ng2FilterPipeModule,
         BootstrapModalModule.forRoot({container: document.body})
     ],
     entryComponents: [

@@ -63,7 +63,6 @@ export class ChangePasswordComponent implements OnInit {
         }).catch((error: firebase.FirebaseError) => {
             // sign in failed
             this._loadingService.emitChange(false);
-            console.log('errorh:' + error.code);
             switch (error.code) {
                 case `auth/wrong-password`: {
                     alert('Mật khẩu hiện tại không đúng, bạn hãy thử lại');

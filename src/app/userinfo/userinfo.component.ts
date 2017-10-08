@@ -6,6 +6,7 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {DialogService} from 'ng2-bootstrap-modal';
 import {Router} from '@angular/router';
 import {Section} from '../model/section.model';
+import {ConfirmComponent} from '../confirm/confirm.component';
 @Component({
     selector: 'app-userinfo',
     templateUrl: 'userinfo.component.html',
@@ -13,7 +14,8 @@ import {Section} from '../model/section.model';
 export class UserInfoComponent implements OnInit {
     firebaseUser: firebase.User;
     sections: Section[] = [];
-    user: User = new User('hoangdd87@gmail.com', 'Đào Đức Hoàng', '43/41.01', '', '0989596889', '', '-Kuxe7mus8V03jlLiIuv');
+    user: User;
+    verifiedText: string;
 
     constructor(private db: AngularFireDatabase, private _loadingService: LoadingService,
                 private afAuth: AngularFireAuth, private dialogService: DialogService, private router: Router) {
@@ -22,11 +24,14 @@ export class UserInfoComponent implements OnInit {
     ngOnInit(): void {
         this.afAuth.auth.onAuthStateChanged(user => {
             this.firebaseUser = user;
+            // console.log(user);
+
             if (user) {
+                this.verifiedText = user.emailVerified ? '' : '(Email này chưa được xác nhận, hãy kiểm tra hòm thư và xác nhận)';
                 // there is an user login
                 this.db.object('users/' + user.uid, {preserveSnapshot: false}).subscribe((snapshot) => {
                     this.user = snapshot;
-                    console.log(this.user);
+                    // console.log(this.user);
                 });
                 this.db.list('/sections', {preserveSnapshot: false}).subscribe((snapshots) => {
                     this.sections = snapshots;
@@ -41,7 +46,40 @@ export class UserInfoComponent implements OnInit {
     }
 
     onSubmit(): void {
+        this._loadingService.emitChange(true);
+        this.db.object('users/' + this.firebaseUser.uid).update(this.user).then(() => {
+            // update user successfully
+            this._loadingService.emitChange(false);
+            const dialog = this.dialogService.addDialog(ConfirmComponent, {
+                title: 'Sửa thông tin thành công',
+                message: `Bạn đã sửa thông tin thành công`
+            }).subscribe(() => {
+
+            });
+        }).catch((error) => {
+            // update user failed
+            this._loadingService.emitChange(false);
+            alert('Đã có lỗi xảy ra, hãy thử lại sau');
+        });
 
     }
 
+    sendEmail(): void {
+        if (this.firebaseUser) {
+            this.afAuth.auth.languageCode = 'vi';
+            this.firebaseUser.sendEmailVerification().then(() => {
+                const dialog = this.dialogService.addDialog(ConfirmComponent, {
+                    title: 'Gửi email xác nhận ',
+                    message: `Một email đã gửi tới email này, bạn hãy làm theo hướng dẫn để được xác nhận`
+                }).subscribe(() => {
+
+                });
+            }).catch((error) => {
+                alert('Đã có lỗi xảy ra, hãy thử lại sau');
+            });
+        }
+    }
+
+
 }
+

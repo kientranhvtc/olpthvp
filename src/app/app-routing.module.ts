@@ -8,6 +8,7 @@ import {UserInfoComponent} from './userinfo/userinfo.component';
 import {ChangePasswordComponent} from './changepassword/changepassword.component';
 import {LoginComponent} from './login/login.component';
 import {ResetPasswordComponent} from './resetpassword/resetpassword.component';
+import {HandleEmailComponent} from './handleemail/handleemail.component';
 
 
 const routes: Routes = [
@@ -28,6 +29,9 @@ const routes: Routes = [
     },
     {
         path: 'resetpassword', component: ResetPasswordComponent
+    },
+    {
+        path: 'handleemail', component: HandleEmailComponent
     }
     /*{ path: 'heroes',     component: HeroesComponent },
      { path: 'admin', component: Admin}*/
