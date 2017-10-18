@@ -10,6 +10,8 @@ export class User {
     public phoneNumber: string;
     public roomKey: string;
     public sectionKey: string;
+    public id: string;
+    public status: string;
 
     public get hidePhoneNumber(): string {
         return this.phoneNumber.substring(0, this.phoneNumber.length - 3) + 'xxx';
@@ -20,15 +22,21 @@ export class User {
         return this.fullName + this.lopNc;
     }
 
+    public get statusText(): string {
+        return this.status ? 'Ok' : 'Chưa xác nhận';
+    }
 
-    constructor(email: string, fullName: string, lopNc: string, lopTc: string, phoneNumber: string, roomKey: string, sectionKey: string) {
-        this.email = email;
-        this.fullName = fullName;
-        this.lopNc = lopNc;
-        this.lopTc = lopTc;
-        this.phoneNumber = phoneNumber;
-        this.roomKey = roomKey;
-        this.sectionKey = sectionKey;
+
+    constructor(user: any) {
+        this.email = user.email || '';
+        this.fullName = user.fullName || '';
+        this.lopNc = user.lopNc || '';
+        this.lopTc = user.lopTc || '';
+        this.phoneNumber = user.phoneNumber || '';
+        this.roomKey = user.roomKey || '';
+        this.sectionKey = user.sectionKey || '';
+        this.id = user.id || '';
+        this.status = user.status || 0;
     }
 }
 

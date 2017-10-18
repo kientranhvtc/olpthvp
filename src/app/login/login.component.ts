@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LoadingService} from '../services/loading-service';
 import {AngularFireAuth} from 'angularfire2/auth';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import * as firebase from 'firebase';
 import {ConfirmComponent} from '../confirm/confirm.component';
 import {DialogService} from 'ng2-bootstrap-modal';
@@ -12,26 +12,34 @@ import {DialogService} from 'ng2-bootstrap-modal';
 })
 export class LoginComponent implements OnInit {
     user = {email: '', password: ''};
+    continueUrl: string;
 
-    constructor(private _loadingService: LoadingService, private afAuth: AngularFireAuth, private router: Router, private dialogService: DialogService) {
+    constructor(private _loadingService: LoadingService, private afAuth: AngularFireAuth,
+                private router: Router, private dialogService: DialogService, private route: ActivatedRoute) {
 
     }
 
     ngOnInit(): void {
-
+        this.continueUrl = this.route.snapshot.paramMap.get('continueUrl');
+        console.log(this.continueUrl);
     }
 
     login(): void {
         this._loadingService.emitChange(true);
         this.afAuth.auth.signInWithEmailAndPassword(this.user.email, this.user.password).then(() => {
             this._loadingService.emitChange(false);
-            this.router.navigate(['/userinfo']);
+            if (this.continueUrl) {
+                this.router.navigate([this.continueUrl]);
+
+            } else {
+                this.router.navigate(['/userinfo']);
+            }
         }).catch((error: firebase.FirebaseError) => {
             this._loadingService.emitChange(false);
             let strCode = '';
             switch (error.code) {
                 case `auth/wrong-password`: {
-                    strCode = ('Sai mật khẩu, bạn hãy kiểm tra lại')
+                    strCode = ('Sai mật khẩu, bạn hãy kiểm tra lại');
                     break;
                 }
                 case `auth/user-not-found`: {
@@ -47,8 +55,10 @@ export class LoginComponent implements OnInit {
                     break;
                 }
             }
-            const dialog = this.dialogService.addDialog(ConfirmComponent, { title: 'Lỗi',
-                message: strCode });
+            const dialog = this.dialogService.addDialog(ConfirmComponent, {
+                title: 'Lỗi',
+                message: strCode
+            });
 
 
         });

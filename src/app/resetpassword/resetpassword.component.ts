@@ -19,7 +19,8 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.afAuth.auth.signOut().then(() => {});
+        this.afAuth.auth.signOut().then(() => {
+        });
     }
 
     resetPassword(): void {
@@ -36,7 +37,7 @@ export class ResetPasswordComponent implements OnInit {
                 this.router.navigate(['/login']);
 
             });
-        }).catch( (error: firebase.FirebaseError) => {
+        }).catch((error: firebase.FirebaseError) => {
             // reset password failed
             this._loadingService.emitChange(false);
             console.log('error:' + error.code);

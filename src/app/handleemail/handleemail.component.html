@@ -1,3 +1,11 @@
-<h4 style="text-align: center">Chúc mừng bạn đã xác nhận email thành công.</h4>
-<p style="text-align: center">Lưu ý mật khẩu ban đầu của bạn (ngay khi tạo tài khoản là 123456)</p>
-<p style="text-align: center">Bạn có thể đổi lại Password tại <a routerLink="/changepassword">đây</a></p>
+<div *ngIf="mode=='verifyEmail'">
+    <div [hidden]="hidden">
+        <h4 style="text-align: center; text-decoration: underline; ">Chúc mừng bạn đã xác nhận email thành công.</h4>
+        <p style="text-align: center">Lưu ý mật khẩu ban đầu của bạn (ngay khi tạo tài khoản là <span style="color: red">123456</span>)</p>
+        <p style="text-align: center">Bạn nên đổi mật khẩu ngay để tránh bị lộ thông tin cá nhân hoặc bị thay đổi thông
+            tin trên tài khoản</p>
+        <p style="text-align: center">Bạn có thể đổi lại mật khẩu tại <a routerLink="/changepassword">đây</a> (Hoặc có thể login rồi chọn chức năng đổi mật khẩu ở mục tài khoản của tôi)</p>
+        <button (click)="gotoChangePassword()" class="btn btn-primary btn-round btn-lg btn-block" style="width: 250px; margin: auto auto" type="button">Đổi mật khẩu</button>
+
+    </div>
+</div>

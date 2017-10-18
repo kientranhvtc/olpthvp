@@ -1,7 +1,7 @@
 /**
  * Created by hoangdaoduc on 9/17/17.
  */
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Pipe} from '@angular/core';
 import {User} from '../model/user.model';
 import {AngularFireDatabase} from 'angularfire2/database';
 import {LoadingService} from '../services/loading-service';
@@ -29,17 +29,15 @@ export class UsersListComponent implements OnInit {
             snapshots.forEach(snapShot => {
                 this.sectionsMap[snapShot.$key] = snapShot;
             });
-            // this.sections = snapshots;
-            console.log(this.sectionsMap);
         });
         this.db.list('/users', {preserveSnapshot: false}).subscribe((snapshots) => {
             this.users = [];
             snapshots.forEach(snapshot => {
-                this.users.push(new User(snapshot.email, snapshot.fullName, snapshot.lopNc,
-                    snapshot.lopTc, snapshot.phoneNumber, snapshot.roomKey, snapshot.sectionKey));
+                this.users.push(new User(snapshot));
 
             });
-            console.log(this.users);
+            // this.users.reverse();
+
         });
     }
 

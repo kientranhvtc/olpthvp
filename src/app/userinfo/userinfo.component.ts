@@ -38,7 +38,7 @@ export class UserInfoComponent implements OnInit {
                 });
             } else {
                 // there is no user login
-                this.router.navigate(['/login']);
+                this.router.navigate(['/login', {continueUrl: 'userinfo'}]);
             }
         });
 

@@ -13,18 +13,22 @@
             <thead>
             <tr>
                 <th>#</th>
+                <th>SBD</th>
                 <th>Họ tên</th>
                 <th>Lớp</th>
                 <th>Ca thi</th>
+                <th>Phòng thi</th>
             </tr>
             </thead>
             <tbody>
 
-            <tr *ngFor="let user of users | filterBy: userFilter; let i = index; ">
+            <tr *ngFor="let user of users | filterBy: userFilter; let i = index;">
                 <th scope="row">{{i+1}}</th>
+                <td>{{user.id}}</td>
                 <td>{{user.fullName}}</td>
                 <td>{{user.lopNc}}</td>
                 <td>{{sectionsMap[user.sectionKey].sectionName}}</td>
+                <td></td>
             </tr>
 
             </tbody>

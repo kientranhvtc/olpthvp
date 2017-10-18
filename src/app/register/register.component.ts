@@ -20,7 +20,7 @@ import {Router} from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
     sections: Section[] = [];
-    user: User = new User('', '', '', '', '', '', '');
+    user: User = new User({});
 
     constructor(private db: AngularFireDatabase, private _loadingService: LoadingService,
                 private afAuth: AngularFireAuth, private dialogService: DialogService, private router: Router) {
@@ -43,8 +43,11 @@ export class RegisterComponent implements OnInit {
             usersObject.set(this.user).then(() => {
                 // Store in the database successfully
                 this._loadingService.emitChange(false);
-                const actionCodeSettings = {};
                 this.afAuth.auth.languageCode = 'vi';
+                /*const actionCodeSettings = {
+                    url: 'https://olpthvp.firebaseapp.com/userslist',
+                    uid: user.uid
+                };*/
                 this.afAuth.auth.currentUser.sendEmailVerification().then(() => {
                     // Send Email verification successfully
                     const dialog = this.dialogService.addDialog(ConfirmComponent, {
@@ -59,6 +62,7 @@ export class RegisterComponent implements OnInit {
                 }).catch((error) => {
                     // Send email verification failed
                     this._loadingService.emitChange(false);
+                    console.log(error);
                     const dialog = this.dialogService.addDialog(ConfirmComponent, { title: 'Lỗi',
                         message: `Có lỗi xảy ra trong quá trình gửi email xác nhận` });
 
@@ -86,6 +90,7 @@ export class RegisterComponent implements OnInit {
                 }
                 default: {
                     strCode = ('Email hoặc mật khẩu không đúng bạn hãy thử lại');
+                    console.log(error.message);
                     break;
                 }
             }
@@ -106,11 +111,6 @@ export class RegisterComponent implements OnInit {
                     alert('declined');
                 }
             });
-        // We can close dialog calling disposable.unsubscribe();
-        // If dialog was not closed manually close it by timeout
-        /*setTimeout(() => {
-         disposable.unsubscribe();
-         }, 10000);*/
     }
 
 }

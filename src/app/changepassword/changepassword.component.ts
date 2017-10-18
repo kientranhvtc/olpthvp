@@ -24,12 +24,23 @@ export class ChangePasswordComponent implements OnInit {
         this.afAuth.auth.onAuthStateChanged(user => {
             this.firebaseUser = user;
             if (user) {
-                this.myEmail = user.email;
                 // there is an user login
+                this.myEmail = user.email;
+                if (!user.emailVerified) {
+                    const dialog = this.dialogService.addDialog(ConfirmComponent, {
+                        title: 'Lỗi',
+                        message: `Email này chưa xác nhận. Bạn không thể yêu cầu đổi mật khâủ được`
+                    }).subscribe(() => {
+                        // Navigate to userslist after show notification to user
+                        this.router.navigate(['/userinfo']);
+                    });
+
+                }
+
             } else {
                 // there is no user login
                 this.myEmail = '';
-                this.router.navigate(['/login']);
+                this.router.navigate(['/login', {continueUrl: 'changepassword'}]);
             }
         });
     }
