@@ -1,6 +1,7 @@
 <div class="section">
     <div class="container">
         <h2>Danh sách thí sinh đăng ký dự thi</h2>
+        <p style="text-align: center; color: red" *ngIf = "isAdmin">* Tài khoản Admin</p>
         <div class="col-sm-6 col-lg-3">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
@@ -8,6 +9,7 @@
                        style="min-width: 250px;max-width: 100%" [(ngModel)]="userFilter.searchKey">
             </div>
         </div>
+        <button *ngIf = "isAdmin" (click)="exportToExcel()" class="btn btn-primary">Export to excel</button>
         <br>
         <table class="table table-hover">
             <thead>
@@ -18,6 +20,9 @@
                 <th>Lớp</th>
                 <th>Ca thi</th>
                 <th>Phòng thi</th>
+                <th *ngIf = "isAdmin">Email</th>
+                <th *ngIf = "isAdmin">SĐT</th>
+                <th *ngIf = "isAdmin">Trạng thái</th>
             </tr>
             </thead>
             <tbody>
@@ -29,6 +34,9 @@
                 <td>{{user.lopNc}}</td>
                 <td>{{sectionsMap[user.sectionKey].sectionName}}</td>
                 <td></td>
+                <td *ngIf = "isAdmin">{{user.email}}</td>
+                <td *ngIf = "isAdmin">{{user.phoneNumber}}</td>
+                <td *ngIf = "isAdmin">{{user.statusText}}</td>
             </tr>
 
             </tbody>

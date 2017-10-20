@@ -52,8 +52,8 @@ export class RegisterComponent implements OnInit {
                     // Send Email verification successfully
                     const dialog = this.dialogService.addDialog(ConfirmComponent, {
                         title: 'Đăng ký thành công',
-                        message: `Bạn đã đăng ký thành công. Một email đã được gửi tới ` + this.user.email + `
-                    . Bạn hãy kiểm tra hòm thư và xác nhận theo hướng dẫn`
+                        message: `Bạn đã đăng ký thành công. Mật khẩu mặc định là 123456 .Một email đã được gửi tới ` + this.user.email + `
+                    . Bạn hãy kiểm tra hòm thư và xác nhận để hoàn tất việc đăng ký`
                     }).subscribe(() => {
                         // Navigate to userslist after show notification to user
                         this.router.navigate(['/userslist']);

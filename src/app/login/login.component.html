@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-4 content-center mx-auto">
             <div class="card card-login card-plain">
-                <form class="form" method="" action="">
+                <form class="form" method="" action="" (ngSubmit)="login()" #loginForm="ngForm">
                     <div class="header header-primary text-center">
                         <div class="logo-container">
                             <img src="/assets/img/logo_olpthvp.png" alt="" style="width: 100px;">
@@ -12,28 +12,44 @@
                     </div>
                     <div class="content">
                         <div class="input-group form-group-no-border input-lg">
-                                <span class="input-group-addon">
-                                    <i class="now-ui-icons users_circle-08"></i>
-                                </span>
-                            <input [(ngModel)]="user.email" type="email" class="form-control" placeholder="email" name="email" required>
+                            <span class="input-group-addon">
+                               <i class="now-ui-icons users_circle-08"></i>
+                            </span>
+                            <input [(ngModel)]="user.email" type="email" class="form-control" placeholder="email"
+                                   id="email" name="email" required autofocus #email="ngModel"
+                                   pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$">
                         </div>
+                        <div style="display: block" [hidden]="(email.valid || email.pristine)"
+                             class="alert alert-danger">
+                            Bạn phải nhập email hợp lệ
+                        </div>
+
                         <div class="input-group form-group-no-border input-lg">
                                 <span class="input-group-addon">
                                     <i class="now-ui-icons text_caps-small"></i>
                                 </span>
                             <input [(ngModel)]="user.password" type="password" placeholder="password"
-                                   class="form-control" name="password">
+                                   class="form-control" name="password" id="password"
+                                   [(ngModel)]="user.password" #password="ngModel" required pattern=".{6,}">
+                        </div>
+                        <div [hidden]="(password.valid || password.pristine)" class="alert alert-danger">
+                            Bạn phải nhập mật khẩu gồm ít nhất 6 kí tự. Nếu bạn vừa đăng ký thì mật khẩu mặc định là 123456
                         </div>
                     </div>
                     <div class="footer text-center">
-                        <button type="button" (click)="login()" class="btn btn-primary btn-round btn-lg btn-block">Đăng nhập</button>
+                        <button type="button" (click)="login()" class="btn btn-primary btn-round btn-lg btn-block">Đăng
+                            nhập
+                        </button>
                     </div>
                     <div class="pull-left">
                         <a routerLink="/register"
-                           style="padding-left: 10px; border: none; color: #f96332; cursor: pointer; background: none">Tạo tài khoản mới</a>
+                           style="padding-left: 10px; border: none; color: #f96332; cursor: pointer; background: none">Tạo
+                            tài khoản mới</a>
                     </div>
                     <div class="pull-right">
-                        <a routerLink="/resetpassword" style="padding-right: 10px; border: none; color: #f96332; cursor: pointer; background: none">Lấy lại mật khẩu</a>
+                        <a routerLink="/resetpassword"
+                           style="padding-right: 10px; border: none; color: #f96332; cursor: pointer; background: none">Lấy
+                            lại mật khẩu</a>
                     </div>
                 </form>
             </div>

@@ -10,6 +10,7 @@ import {DialogService} from 'ng2-bootstrap-modal';
 import {Router} from '@angular/router';
 import {Section} from '../model/section.model';
 import {forEach} from '@angular/router/src/utils/collection';
+import {ExcelService} from '../services/excel.service';
 
 @Component({
     selector: 'app-userslist',
@@ -19,12 +20,15 @@ export class UsersListComponent implements OnInit {
     users: User[] = [];
     sectionsMap: { [key: string]: Section } = {};
     userFilter: any = {searchKey: ''};
+    isAdmin = false;
 
     constructor(private db: AngularFireDatabase, private _loadingService: LoadingService,
-                private afAuth: AngularFireAuth, private dialogService: DialogService, private router: Router) {
+                private afAuth: AngularFireAuth, private dialogService: DialogService,
+                private router: Router, private excelService: ExcelService) {
     }
 
     ngOnInit(): void {
+        this._loadingService.emitChange(true);
         this.db.list('/sections', {preserveSnapshot: false}).subscribe((snapshots) => {
             snapshots.forEach(snapShot => {
                 this.sectionsMap[snapShot.$key] = snapShot;
@@ -37,8 +41,36 @@ export class UsersListComponent implements OnInit {
 
             });
             // this.users.reverse();
+            this.users.sort((user1, user2) => {
+                if (user1.id >= user2.id) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+            this._loadingService.emitChange(false);
 
         });
+        this.afAuth.auth.onAuthStateChanged(user => {
+                if (user) {
+                    // there is an user login
+                    this.db.object('/users/' + user.uid + '/role').subscribe((snapShot) => {
+                        if (snapShot.$value === 'admin') {
+                            this.isAdmin = true;
+                        } else {
+                            this.isAdmin = false;
+                        }
+                        console.log(snapShot);
+                    });
+                } else {
+                    // there is no user login
+                }
+            }
+        );
+    }
+
+    exportToExcel(event) {
+        this.excelService.exportAsExcelFile(this.users, 'persons');
     }
 
 }

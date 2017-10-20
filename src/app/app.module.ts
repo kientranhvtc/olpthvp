@@ -23,6 +23,7 @@ import {LoginComponent} from './login/login.component';
 import {ResetPasswordComponent} from './resetpassword/resetpassword.component';
 import {HandleEmailComponent} from './handleemail/handleemail.component';
 import { Ng2FilterPipeModule } from 'ng2-filter-pipe';
+import {ExcelService} from './services/excel.service';
 
 @NgModule({
     declarations: [
@@ -43,7 +44,7 @@ import { Ng2FilterPipeModule } from 'ng2-filter-pipe';
     entryComponents: [
         ConfirmComponent
     ],
-    providers: [LoadingService],
+    providers: [LoadingService, ExcelService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
