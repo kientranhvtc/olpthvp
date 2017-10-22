@@ -48,7 +48,12 @@ export class ChangePasswordComponent implements OnInit {
     onSubmit(): void {
         const newPassword = (this.newPassword1 === this.newPassword2) ? this.newPassword1 : '';
         if (!newPassword) {
-            alert('Mật khẩu mới và nhắc lại không khớp với nhau');
+            const errStr = 'Mật khẩu mới và nhắc lại không khớp với nhau';
+            const dialog = this.dialogService.addDialog(ConfirmComponent, {
+                title: 'Yêu cầu đổi mật khẩu thất bại',
+                message: errStr
+            }).subscribe(() => {
+            });
             return;
         }
 
@@ -68,26 +73,35 @@ export class ChangePasswordComponent implements OnInit {
                 });
             }).catch((error) => {
                 this._loadingService.emitChange(false);
-                alert('Có lỗi xảy ra trong quá trình đổi mật khẩu, bạn hãy thử lại sau');
-
+                const dialog = this.dialogService.addDialog(ConfirmComponent, {
+                    title: 'Yêu cầu đổi mật khẩu thất bại',
+                    message: 'Có lỗi xảy ra trong quá trình đổi mật khẩu, bạn hãy thử lại sau'
+                }).subscribe(() => {
+                });
             });
         }).catch((error: firebase.FirebaseError) => {
             // sign in failed
             this._loadingService.emitChange(false);
+            let errorStr: string;
             switch (error.code) {
                 case `auth/wrong-password`: {
-                    alert('Mật khẩu hiện tại không đúng, bạn hãy thử lại');
+                    errorStr = ('Mật khẩu hiện tại không đúng, bạn hãy thử lại');
                     break;
                 }
                 default: {
-                    alert('Đã có lỗi xảy ra, bạn hãy thử lại sau');
+                    errorStr = ('Đã có lỗi xảy ra, bạn hãy thử lại sau');
                     break;
                 }
             }
+            const dialog = this.dialogService.addDialog(ConfirmComponent, {
+                title: 'Yêu cầu đổi mật khẩu thất bại',
+                message: errorStr
+            }).subscribe(() => {
+            });
 
         });
-
-
     }
+
+
 
 }

@@ -3,6 +3,7 @@
  */
 import {Component} from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -12,7 +13,7 @@ import {AngularFireAuth} from 'angularfire2/auth';
 export class NavbarComponent {
     user: firebase.User;
 
-    constructor(private afAuth: AngularFireAuth) {
+    constructor(private afAuth: AngularFireAuth, private router: Router) {
         this.afAuth.auth.onAuthStateChanged(user => {
             this.user = user;
         });
@@ -21,5 +22,25 @@ export class NavbarComponent {
     signOut(): void {
         this.afAuth.auth.signOut();
     }
+
+    gotoPage(page: string) {
+        this.router.navigate([page]);
+    }
+
+    toggleCollapse(): void {
+        // this.show = !this.show;
+    }
+
+    close_Navbar(): void {
+        // document.documentElement.classList.remove('nav-open');
+        if (document.getElementsByClassName('has-image').length > 0) {
+            document.getElementById('button_navbar').click();
+        }
+    }
 }
+
+// navbar-collapse justify-content-end collapse
+// collapse navbar-collapse justify-content-end has-image
+// navbar-collapse justify-content-end has-image collapse show
+// navbar-collapse justify-content-end has-image collapse show
 

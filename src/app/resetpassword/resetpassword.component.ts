@@ -41,20 +41,27 @@ export class ResetPasswordComponent implements OnInit {
             // reset password failed
             this._loadingService.emitChange(false);
             console.log('error:' + error.code);
+            let str: string;
             switch (error.code) {
                 case `auth/invalid-email`: {
-                    alert('Email không hợp lệ. bạn hãy kiểm tra lại');
+                    str = ('Email không hợp lệ. bạn hãy kiểm tra lại');
                     break;
                 }
                 case `auth/user-not-found`: {
-                    alert('Tài khoản không tồn tại');
+                    str = ('Tài khoản không tồn tại');
                     break;
                 }
                 default: {
-                    alert('Đã có lỗi xảy ra, hãy thử lại sau');
+                    str = ('Đã có lỗi xảy ra, hãy thử lại sau');
                     break;
                 }
             }
+            const dialog = this.dialogService.addDialog(ConfirmComponent, {
+                title: 'Yêu cầu đổi mật khẩu thất bại',
+                message: str
+        }).subscribe(() => {
+            });
+
 
         });
     }

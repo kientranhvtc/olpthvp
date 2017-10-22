@@ -1,11 +1,107 @@
-<div *ngIf="mode=='verifyEmail'">
-    <div [hidden]="hidden">
-        <h4 style="text-align: center; text-decoration: underline; ">Chúc mừng bạn đã xác nhận email thành công.</h4>
-        <p style="text-align: center">Lưu ý mật khẩu ban đầu của bạn (ngay khi tạo tài khoản là <span style="color: red">123456</span>)</p>
-        <p style="text-align: center">Bạn nên đổi mật khẩu ngay để tránh bị lộ thông tin cá nhân hoặc bị thay đổi thông
-            tin trên tài khoản</p>
-        <p style="text-align: center">Bạn có thể đổi lại mật khẩu tại <a routerLink="/changepassword">đây</a> (Hoặc có thể login rồi chọn chức năng đổi mật khẩu ở mục tài khoản của tôi)</p>
-        <button (click)="gotoChangePassword()" class="btn btn-primary btn-round btn-lg btn-block" style="width: 250px; margin: auto auto" type="button">Đổi mật khẩu</button>
+<div class="container">
+    <div *ngIf="mode=='verifyEmail'">
+        <div [hidden]="hidden">
+            <h4 style="text-align: center; text-decoration: underline; ">Chúc mừng bạn đã xác nhận email thành
+                công.</h4>
+            <p style="text-align: center">Lưu ý mật khẩu ban đầu của bạn (ngay khi tạo tài khoản là <span
+                    style="color: red">123456</span>)</p>
+            <p style="text-align: center">Bạn nên đổi mật khẩu ngay để tránh bị lộ thông tin cá nhân hoặc bị thay đổi
+                thông tin trên tài khoản</p>
+            <p style="text-align: center">Bạn có thể đổi lại mật khẩu tại <a routerLink="/changepassword">đây</a> (Hoặc
+                có thể login rồi chọn chức năng đổi mật khẩu ở phần cài đặt tài khoản)</p>
+            <br>
 
+            <div class="d-flex justify-content-center">
+                <button (click)="gotoPage('login')" class="btn btn-primary btn-round"
+                        style="width: 250px;" type="button">Đăng nhập
+                </button>
+                <button (click)="gotoPage('register')" class="btn btn-primary btn-round"
+                        style="width: 250px;" type="button">Đổi mật khẩu
+                </button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="mode=='resetPassword'">
+        <div [hidden]="hidden">
+            <div class="row">
+                <div class="col-md-4 content-center mx-auto">
+                    <div class="card card-login card-plain">
+                        <div class="header header-primary text-center">
+                            <div class="logo-container">
+                                <img src="/assets/img/logo_olpthvp.png" alt="" style="width: 100px;">
+                            </div>
+                            <h4 style="text-align: center">Đổi mật khẩu cho tài khoản</h4>
+                        </div>
+
+                        <div class="content">
+                            <label>Email</label>
+                            <div class="input-group form-group-no-border input-lg">
+                                <span class="input-group-addon">
+                                    <i class="now-ui-icons users_circle-08"></i>
+                                </span>
+                                <input type="email" class="form-control" placeholder="email" name="email"
+                                       [value]="user.email" disabled required>
+                            </div>
+                            <form (ngSubmit)="saveNewPassWord(new_Password1.value, new_Password2.value)"
+                                  #changePasswordForm="ngForm">
+
+                                <div class="form-group">
+                                    <label for="newPassword1">Mật khẩu mới</label>
+                                    <div class="input-group form-group-no-border input-lg">
+                                        <span class="input-group-addon"><i
+                                                class="now-ui-icons text_caps-small"></i></span>
+                                        <input type="password" placeholder="Mật khẩu mới" class="form-control"
+                                               id="newPassword1" name="newPassword1"
+                                               [(ngModel)]="user.newPassword1" #new_Password1="ngModel" pattern=".{6,}"
+                                               required>
+                                    </div>
+                                    <div [hidden]="(new_Password1.valid || new_Password1.pristine)"
+                                         class="alert alert-danger">
+                                        Bạn phải nhập mật khẩu gồm ít nhất 6 kí tự
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="newPassword2">Nhắc lại mật khẩu mới</label>
+                                    <div class="input-group form-group-no-border input-lg">
+                                        <span class="input-group-addon"><i
+                                                class="now-ui-icons text_caps-small"></i></span>
+                                        <input type="password" placeholder="Nhắc lại mật khẩu mới" class="form-control"
+                                               id="newPassword2" name="newPassword2"
+                                               [(ngModel)]="user.newPassword2" #new_Password2="ngModel" pattern=".{6,}"
+                                               required>
+                                    </div>
+                                    <div [hidden]="(new_Password2.valid || new_Password2.pristine)"
+                                         class="alert alert-danger">
+                                        Bạn phải nhập mật khẩu gồm ít nhất 6 kí tự
+                                    </div>
+                                </div>
+                                <div class="footer text-center">
+                                    <button type="submit" class="btn btn-primary btn-round btn-lg btn-block"
+                                            [disabled]="!changePasswordForm.valid">
+                                        Gửi yêu cầu
+                                    </button>
+                                    <div class="alert alert-danger"
+                                         [hidden]="changePasswordForm.valid || changePasswordForm.pristine">
+                                        Thông tin trên Form chưa hợp lệ hoàn toàn, bạn hãy kiểm tra lại
+                                    </div>
+                                </div>
+                                <div class="pull-left">
+                                    <a routerLink="/register"
+                                       style="padding-left: 10px; border: none; color: #f96332; cursor: pointer; background: none">Tạo
+                                        tài khoản mới</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a routerLink="/resetpassword"
+                                       style="padding-right: 10px; border: none; color: #f96332; cursor: pointer; background: none">Quên
+                                        mật khẩu </a>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

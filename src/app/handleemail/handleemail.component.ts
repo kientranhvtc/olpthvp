@@ -27,7 +27,9 @@ export class HandleEmailComponent implements OnInit {
     actionCode: string;
     apiKey: string;
     continueUrl: string;
-    hidden = false;
+    hidden = true;
+    user = {email: '', newPassword1: '', newPassword2: ''};
+
     constructor(private db: AngularFireDatabase, private _loadingService: LoadingService,
                 private afAuth: AngularFireAuth, private dialogService: DialogService, private router: Router) {
     }
@@ -38,7 +40,6 @@ export class HandleEmailComponent implements OnInit {
 
         // Get the action to complete.
         this.mode = getParameterByName('mode');
-        console.log(this.mode);
         // Get the one-time code from the query parameter.
         this.actionCode = getParameterByName('oobCode');
         // (Optional) Get the API key from the query parameter.
@@ -49,8 +50,21 @@ export class HandleEmailComponent implements OnInit {
         // Handle the user management action.
         switch (this.mode) {
             case 'resetPassword':
-                // Display reset password handler and UI.
-                // handleResetPassword(auth, actionCode, continueUrl);
+                this._loadingService.emitChange(true);
+                this.afAuth.auth.verifyPasswordResetCode(this.actionCode).then((email) => {
+                    this._loadingService.emitChange(false);
+                    this.user.email = email;
+                    this.hidden = false;
+                }).catch((error) => {
+                    // Invalid or expired action code. Ask user to try to reset the password again.
+                    this._loadingService.emitChange(false);
+                    const dialog = this.dialogService.addDialog(ConfirmComponent, {
+                        title: 'Yêu cầu lấy lại mật khẩu thất bại',
+                        message: `Việc yêu cầu lấy lại mật khẩu đã có thất bại.
+                         Có thể do email xác nhận này đã hết hiệu lực, bạn hãy thử lại sau`
+                    }).subscribe(() => {
+                    });
+                });
                 break;
             case 'recoverEmail':
                 // Display email recovery handler and UI.
@@ -59,11 +73,33 @@ export class HandleEmailComponent implements OnInit {
             case 'verifyEmail':
                 this._loadingService.emitChange(true);
                 this.afAuth.auth.applyActionCode(this.actionCode).then((resp) => {
+                    console.log('resp=' + resp);
                     this._loadingService.emitChange(false);
                     this.hidden = false;
+                    const currentUser = this.afAuth.auth.currentUser;
+                    if (currentUser) {
+                        currentUser.reload().then(() => {
+                            if (currentUser.emailVerified) {
+                                this.db.object('users/' + currentUser.uid, {preserveSnapshot: false}).take(1).subscribe((snapshot) => {
+                                    if (!snapshot.status) {
+                                        snapshot.status = 1;
+                                        this.db.object('users/' + snapshot.$key).update(snapshot).then(() => {
+                                            // update user successfully
+                                            console.log('Update verified status successfully');
+                                        }).catch((error) => {
+                                            console.log('Update verified status failed');
+                                            console.log(error);
+                                        });
+                                    }
+                                });
+
+                            }
+                        });
+
+                    }
+                    // this.afAuth.auth.signOut();
                     // TODO: Display a confirmation message to the user.
                     // You could also provide the user with a link back to the app.
-
                 }).catch((error) => {
                     this._loadingService.emitChange(false);
                     const dialog = this.dialogService.addDialog(ConfirmComponent, {
@@ -78,13 +114,37 @@ export class HandleEmailComponent implements OnInit {
             default:
             // Error: invalid mode.
         }
-
     }
 
-    gotoChangePassword(): void {
-        this.router.navigate(['/changepassword']);
+    gotoPage(path: string): void {
+        this.router.navigate([path]);
     }
 
+    saveNewPassWord(): void {
+        if (this.user.newPassword1 !== this.user.newPassword2) {
+            const dialog = this.dialogService.addDialog(ConfirmComponent, {
+                title: 'Đổi mật khâủ thất bại',
+                message: `Mật khẩu mới và nhắc lại không khớp nhau`
+            }).subscribe(() => {
+            });
+            return;
+        }
+        const newPassword = this.user.newPassword1;
+        this.afAuth.auth.confirmPasswordReset(this.actionCode, newPassword).then((resp) => {
+            const dialog = this.dialogService.addDialog(ConfirmComponent, {
+                title: 'Đổi mật khâủ thành công',
+                message: `Bạn đã đổi mật khẩu thành công. Bạn có thể login vào tài khoản theo mật khẩu mới`
+            }).subscribe(() => {
+                this.gotoPage('login');
+            });
+        }).catch((error) => {
+            const dialog = this.dialogService.addDialog(ConfirmComponent, {
+                title: 'Đổi mật khâủ thất bại',
+                message: `Bạn đã đổi mật khẩu thất bại. Hãy kiểm tra lại mật khẩu phải đủ 6 kí tự`
+            }).subscribe(() => {
+            });
+        });
+    }
 
 
 }

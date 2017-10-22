@@ -2,10 +2,10 @@
 
 import 'zone.js/dist/long-stack-trace-zone';
 import 'zone.js/dist/proxy.js';
-import 'zone.js/dist/sync-test';
+import 'zone.js/dist/sync-close_Navbar';
 import 'zone.js/dist/jasmine-patch';
-import 'zone.js/dist/async-test';
-import 'zone.js/dist/fake-async-test';
+import 'zone.js/dist/async-close_Navbar';
+import 'zone.js/dist/fake-async-close_Navbar';
 import { getTestBed } from '@angular/core/testing';
 import {
   BrowserDynamicTestingModule,
