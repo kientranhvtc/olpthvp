@@ -28,6 +28,7 @@ export class HandleEmailComponent implements OnInit {
     apiKey: string;
     continueUrl: string;
     hidden = true;
+    success = null;
     user = {email: '', newPassword1: '', newPassword2: ''};
 
     constructor(private db: AngularFireDatabase, private _loadingService: LoadingService,
@@ -37,7 +38,7 @@ export class HandleEmailComponent implements OnInit {
     ngOnInit(): void {
 
         // TODO: Implement getParameterByName()
-
+        this.success = null;
         // Get the action to complete.
         this.mode = getParameterByName('mode');
         // Get the one-time code from the query parameter.
@@ -73,17 +74,17 @@ export class HandleEmailComponent implements OnInit {
             case 'verifyEmail':
                 this._loadingService.emitChange(true);
                 this.afAuth.auth.applyActionCode(this.actionCode).then((resp) => {
-                    console.log('resp=' + resp);
                     this._loadingService.emitChange(false);
                     this.hidden = false;
+                    this.success = true;
                     const currentUser = this.afAuth.auth.currentUser;
                     if (currentUser) {
                         currentUser.reload().then(() => {
                             if (currentUser.emailVerified) {
-                                this.db.object('users/' + currentUser.uid, {preserveSnapshot: false}).take(1).subscribe((snapshot) => {
+                                this.db.object('finalUsers/' + currentUser.uid, {preserveSnapshot: false}).take(1).subscribe((snapshot) => {
                                     if (!snapshot.status) {
                                         snapshot.status = 1;
-                                        this.db.object('users/' + snapshot.$key).update(snapshot).then(() => {
+                                        this.db.object('finalUsers/' + snapshot.$key).update(snapshot).then(() => {
                                             // update user successfully
                                             console.log('Update verified status successfully');
                                         }).catch((error) => {
@@ -102,12 +103,7 @@ export class HandleEmailComponent implements OnInit {
                     // You could also provide the user with a link back to the app.
                 }).catch((error) => {
                     this._loadingService.emitChange(false);
-                    const dialog = this.dialogService.addDialog(ConfirmComponent, {
-                        title: 'Xác nhận thất bại',
-                        message: `Việc xác nhận email đã có thất bại, Có thể do email xác nhận này đã hết hiệu lực, bạn hãy thử lại sau`
-                    }).subscribe(() => {
-
-                    });
+                    this.success = false;
                 });
 
                 break;

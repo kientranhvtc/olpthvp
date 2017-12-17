@@ -1,6 +1,6 @@
 <div class="container">
     <div class="section">
-        <h3 style="text-align: center">Thông tin người dùng</h3>
+        <h3 style="text-align: center">Thông tin người dùng (Đã hết thời gian sửa thông tin)</h3>
         <div *ngIf="firebaseUser">
             <div class="row">
                 <div class="col-md-10 col-lg-8 mx-auto">
@@ -16,9 +16,12 @@
                         <a (click)="sendEmail()" style="padding-left: 10px; border: none; color: #f96332; cursor: pointer; background: none">Gửi lại email xác nhận</a>
                     </div>
                     <br><br>
+                    <div class="form-group">
+                        <label for="fullName">Số báo danh</label>
+                        <input *ngIf="user" type="text" class="form-control" value='Cập nhật sau' disabled>
+                    </div>
                     <div *ngIf="user">
                         <form (ngSubmit)="onSubmit()" #userinfoForm="ngForm">
-
                             <div class="form-group">
                                 <label for="fullName">Họ và tên</label>
                                 <input type="text" class="form-control" id="fullName" name="fullname"
@@ -63,13 +66,17 @@
                                     Bạn phải chọn một ca thi còn có vị trí trống
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="fullName">Phòng thi: (Cập nhật sau) </label>
+                            </div>
 
-                            <button type="submit" class="btn btn-success btn-round w-100" [disabled]="!userinfoForm.valid">Lưu thông tin</button>
+                            <button type="submit" class="btn btn-success btn-round w-100" [disabled]="true">Lưu thông tin</button>
 
                             <div class="alert alert-danger" [hidden]="userinfoForm.valid">
                                 Thông tin trên Form chưa hợp lệ hoàn toàn, bạn hãy kiểm tra lại
                             </div>
                         </form>
+
                     </div>
 
                 </div>

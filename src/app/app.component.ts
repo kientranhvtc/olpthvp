@@ -20,7 +20,7 @@ export class AppComponent {
         this.afAuth.auth.onAuthStateChanged(user => {
             if (user) {
                 if (user.emailVerified) {
-                    this.db.object('users/' + user.uid, {preserveSnapshot: false}).take(1).subscribe((snapshot) => {
+                    this.db.object('/users/' + user.uid, {preserveSnapshot: false}).take(1).subscribe((snapshot) => {
                         if (!snapshot.status) {
                             snapshot.status = 1;
                             this.db.object('users/' + snapshot.$key).update(snapshot).then(() => {

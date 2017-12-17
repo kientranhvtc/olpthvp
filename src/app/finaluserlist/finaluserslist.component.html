@@ -23,21 +23,19 @@
                 <th>Phòng thi</th>
                 <th *ngIf = "isAdmin">Email</th>
                 <th *ngIf = "isAdmin">SĐT</th>
-                <th *ngIf = "isAdmin">Trạng thái</th>
             </tr>
             </thead>
             <tbody>
 
-            <tr *ngFor="let user of users | filterBy: userFilter; let i = index;">
+            <tr *ngFor="let user of finalUsers | filterBy: userFilter; let i = index;">
                 <th scope="row">{{i+1}}</th>
-                <td></td><!--<td>{{user.id}}</td>-->
-                <td>{{user.fullName}}</td>
-                <td>{{user.lopNc}}</td>
-                <td>{{sectionsMap[user.sectionKey].sectionName}}</td>
-                <td></td>
-                <td *ngIf = "isAdmin">{{user.email}}</td>
-                <td *ngIf = "isAdmin">{{user.phoneNumber}}</td>
-                <td *ngIf = "isAdmin">{{user.statusText}}</td>
+                <td>{{user.SBD}}</td>
+                <td>{{user.hoten}}</td>
+                <td>{{user.lopnc}}</td>
+                <th>{{user.cathi}}</th>
+                <th>{{user.phongthi}}</th>
+                <td *ngIf = "isAdmin">{{user.Email}}</td>
+                <td *ngIf = "isAdmin">{{user.sdt}}</td>
             </tr>
 
             </tbody>

@@ -24,11 +24,12 @@ import {ResetPasswordComponent} from './resetpassword/resetpassword.component';
 import {HandleEmailComponent} from './handleemail/handleemail.component';
 import { Ng2FilterPipeModule } from 'ng2-filter-pipe';
 import {ExcelService} from './services/excel.service';
+import {FinalUsersListComponent} from './finaluserlist/finalusers.component';
 
 @NgModule({
     declarations: [
         AppComponent, NavbarComponent, HomeComponent, FooterComponent, UsersListComponent,
-        RegisterComponent, DatabaseComponent, LoadingComponent,
+        RegisterComponent, DatabaseComponent, LoadingComponent, FinalUsersListComponent,
         ConfirmComponent, UserInfoComponent, ChangePasswordComponent, LoginComponent, ResetPasswordComponent, HandleEmailComponent
     ],
     imports: [

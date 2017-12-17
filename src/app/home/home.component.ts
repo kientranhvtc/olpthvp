@@ -14,5 +14,9 @@ export class HomeComponent {
 
     gotoRegister(): void {
         this.router.navigate(['register']);
-}
+    }
+
+    gotoUsersList(): void {
+        this.router.navigate(['userslist']);
+    }
 }

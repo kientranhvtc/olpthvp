@@ -4,6 +4,7 @@
 import {Component} from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {Router} from '@angular/router';
+import {AngularFireDatabase} from 'angularfire2/database';
 
 
 @Component({
@@ -12,10 +13,21 @@ import {Router} from '@angular/router';
 })
 export class NavbarComponent {
     user: firebase.User;
+    isadmin = false;
 
-    constructor(private afAuth: AngularFireAuth, private router: Router) {
+    constructor(private afAuth: AngularFireAuth, private router: Router, private db: AngularFireDatabase) {
         this.afAuth.auth.onAuthStateChanged(user => {
             this.user = user;
+            this.isadmin = false;
+            if (user) {
+                this.db.object('/users/' + user.uid + '/role').subscribe((snapshot) => {
+                    console.log(snapshot.$value);
+                    this.isadmin = (snapshot.$value === 'admin');
+                    console.log(this.isadmin);
+                });
+
+
+            }
         });
     }
 

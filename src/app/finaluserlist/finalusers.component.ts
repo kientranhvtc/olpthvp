@@ -11,14 +11,14 @@ import {Router} from '@angular/router';
 import {Section} from '../model/section.model';
 import {forEach} from '@angular/router/src/utils/collection';
 import {ExcelService} from '../services/excel.service';
+import {FinalUser} from '../model/FinalUser';
 
 @Component({
-    selector: 'app-userslist',
-    templateUrl: 'userslist.component.html',
+    selector: 'app-finaluserslist',
+    templateUrl: 'finaluserslist.component.html',
 })
-export class UsersListComponent implements OnInit {
-    users: User[] = [];
-    sectionsMap: { [key: string]: Section } = {};
+export class FinalUsersListComponent implements OnInit {
+    finalUsers: FinalUser[] = [];
     userFilter: any = {searchKey: ''};
     isAdmin = false;
 
@@ -29,30 +29,13 @@ export class UsersListComponent implements OnInit {
 
     ngOnInit(): void {
         this._loadingService.emitChange(true);
-        this.db.list('/sections', {preserveSnapshot: false}).subscribe((snapshots) => {
-            snapshots.forEach(snapShot => {
-                this.sectionsMap[snapShot.$key] = snapShot;
-            });
-        });
-        this.db.list('/users', {preserveSnapshot: false}).subscribe((snapshots) => {
-            this.users = [];
+        this.db.list('/final', {preserveSnapshot: false}).subscribe((snapshots) => {
+            this.finalUsers = [];
             snapshots.forEach(snapshot => {
-                this.users.push(new User(snapshot));
+                this.finalUsers.push(new FinalUser(snapshot));
 
-            });
-            // this.finalUsers.reverse();
-            // console.log(this.finalUsers);
-            this.users.sort((user1: User, user2: User) => {
-                if (parseInt(user1.id, 10) > parseInt(user2.id, 10)) {
-                    return 1;
-                } else if (parseInt(user1.id, 10) < parseInt(user2.id, 10)) {
-                    return -1;
-                } else {
-                    return 0;
-                }
             });
             this._loadingService.emitChange(false);
-
         });
         this.afAuth.auth.onAuthStateChanged(user => {
                 if (user) {
@@ -70,10 +53,13 @@ export class UsersListComponent implements OnInit {
                 }
             }
         );
+
+
+
     }
 
     exportToExcel(event) {
-        this.excelService.exportAsExcelFile(this.users, 'persons');
+        this.excelService.exportAsExcelFile(this.finalUsers, 'persons');
     }
 
 }

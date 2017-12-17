@@ -2,7 +2,6 @@
  * Created by hoangdaoduc on 9/25/17.
  */
 export class User {
-    public $key: string;
     public email: string;
     public fullName: string;
     public lopNc: string;

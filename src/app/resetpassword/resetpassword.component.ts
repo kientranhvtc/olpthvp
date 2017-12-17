@@ -11,7 +11,7 @@ import {DialogService} from 'ng2-bootstrap-modal';
     templateUrl: 'resetpassword.component.html',
 })
 export class ResetPasswordComponent implements OnInit {
-    user = {email: 'Hoangdd87@gmail.com'};
+    user = {email: ''};
 
     constructor(private _loadingService: LoadingService, private afAuth: AngularFireAuth, private router: Router,
                 private dialogService: DialogService) {

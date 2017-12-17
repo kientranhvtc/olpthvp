@@ -1,13 +1,20 @@
 <div class="container">
-    <div class="section">
-        <h2 style="text-align: center">Đăng ký dự thi</h2>
+    <div class="d-flex justify-content-center">
+        <button (click)="gotoHome()" class="btn btn-primary btn-round">
+            <i class="now-ui-icons business_bank"></i> Giới thiệu cuộc thi
+        </button>
+    </div>
+    <div class="section" style="padding-top: 40px">
+        <h2 style="text-align: center">Đăng ký dự thi (Đã hết hạn đăng ký online)</h2>
+        <p style="text-align: center">Ngày thi: 10/11/2017 (Hạn cuối đăng ký: 07/11/2017)</p>
         <div class="row">
             <div class="col-md-10 col-lg-8 mx-auto">
                 <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
                     <div class="form-group">
                         <label for="email">Email:</label>
                         <input type="email" class="form-control" id="email" name="email" [(ngModel)]="user.email"
-                               autofocus required #email="ngModel" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$">
+                               autofocus required #email="ngModel"
+                               pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$">
                         <div [hidden]="(email.valid || email.pristine)" class="alert alert-danger">
                             Bạn phải nhập email hợp lệ
                         </div>
@@ -54,7 +61,11 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-success btn-round w-100" [disabled]="!registerForm.valid">
+                    <!--<button type="submit" class="btn btn-success btn-round w-100" [disabled]="!registerForm.valid">
+                        Nộp ngay
+                    </button>-->
+                    <p style="color: red">Rất tiếc, thời gian đăng ký cuộc thi đã hết</p>
+                    <button type="submit" class="btn btn-success btn-round w-100" [disabled]="true">
                         Nộp ngay
                     </button>
 

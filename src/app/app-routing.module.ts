@@ -9,13 +9,14 @@ import {ChangePasswordComponent} from './changepassword/changepassword.component
 import {LoginComponent} from './login/login.component';
 import {ResetPasswordComponent} from './resetpassword/resetpassword.component';
 import {HandleEmailComponent} from './handleemail/handleemail.component';
+import {FinalUsersListComponent} from './finaluserlist/finalusers.component';
 
 
 const routes: Routes = [
     /*{path: '', redirectTo: '/register', pathMatch: 'full'},*/
     {path: '', component: HomeComponent},
     {path: 'home', component: HomeComponent},
-    {path: 'userslist', component: UsersListComponent},
+    {path: 'userslist', component: FinalUsersListComponent},
     {path: 'database', component: DatabaseComponent},
     {path: 'register', component: RegisterComponent},
     {
@@ -32,6 +33,9 @@ const routes: Routes = [
     },
     {
         path: 'handleemail', component: HandleEmailComponent
+    },
+    {
+        path: 'final', component: FinalUsersListComponent
     }
     /*{ path: 'heroes',     component: HeroesComponent },
      { path: 'admin', component: Admin}*/

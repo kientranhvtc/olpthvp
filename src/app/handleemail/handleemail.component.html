@@ -20,6 +20,20 @@
                 </button>
             </div>
         </div>
+        <div *ngIf="success===false">
+            <h4 style="text-align: center; text-decoration: underline; ">Xác nhận email thất bại.</h4>
+            <p style="text-align: center">Việc xác nhận email này đã thất bại, có thể bởi đường link xác nhận này đã hết hạn</p>
+            <p style="text-align: center">Bạn có thể lấy lại email xác nhận bằng cách <a routerLink="/login">đăng nhập</a>
+            với email là email đã đăng ký và password mặc định là 123456, sau đó gửi lại yêu cầu xác nhận email</p>
+
+            <br>
+
+            <div class="d-flex justify-content-center">
+                <button (click)="gotoPage('login')" class="btn btn-primary btn-round"
+                        style="width: 250px;" type="button">Đăng nhập
+                </button>
+            </div>
+        </div>
     </div>
     <div *ngIf="mode=='resetPassword'">
         <div [hidden]="hidden">

@@ -28,13 +28,20 @@ export class RegisterComponent implements OnInit {
 
 
     ngOnInit(): void {
+        const dialog = this.dialogService.addDialog(ConfirmComponent, {
+            title: 'Hết hạn đăng ký online',
+            message: `Đã kết thúc thời gian đăng ký online`
+        }).subscribe(() => {
+            // this.router.navigate(['/userslist']);
+
+        });
         this.db.list('/sections', {preserveSnapshot: false}).subscribe((snapshots) => {
             this.sections = snapshots;
         });
     }
 
     onSubmit() {
-        /* Tìm xem trong users đã có email vừa gửi không. Nếu có thì báo là tài khoản này đã đã đăng ký rồi*/
+        /* Tìm xem trong finalUsers đã có email vừa gửi không. Nếu có thì báo là tài khoản này đã đã đăng ký rồi*/
         this._loadingService.emitChange(true);
         const createAuth = this.afAuth.auth.createUserWithEmailAndPassword(this.user.email, '123456');
         createAuth.then(user => {
@@ -45,9 +52,9 @@ export class RegisterComponent implements OnInit {
                 this._loadingService.emitChange(false);
                 this.afAuth.auth.languageCode = 'vi';
                 /*const actionCodeSettings = {
-                    url: 'https://olpthvp.firebaseapp.com/userslist',
-                    uid: user.uid
-                };*/
+                 url: 'https://olpthvp.firebaseapp.com/userslist',
+                 uid: user.uid
+                 };*/
                 this.afAuth.auth.currentUser.sendEmailVerification().then(() => {
                     // Send Email verification successfully
                     const dialog = this.dialogService.addDialog(ConfirmComponent, {
@@ -56,23 +63,27 @@ export class RegisterComponent implements OnInit {
                     . Bạn hãy kiểm tra hòm thư và xác nhận để hoàn tất việc đăng ký`
                     }).subscribe(() => {
                         // Navigate to userslist after show notification to user
-                        this.router.navigate(['/userslist']);
+                        this.router.navigate(['/userinfo']);
 
                     });
                 }).catch((error) => {
                     // Send email verification failed
                     this._loadingService.emitChange(false);
                     console.log(error);
-                    const dialog = this.dialogService.addDialog(ConfirmComponent, { title: 'Lỗi',
-                        message: `Có lỗi xảy ra trong quá trình gửi email xác nhận` });
+                    const dialog = this.dialogService.addDialog(ConfirmComponent, {
+                        title: 'Lỗi',
+                        message: `Có lỗi xảy ra trong quá trình gửi email xác nhận`
+                    });
 
                 });
             }).catch(() => {
                 // Store data in the database failed
                 this._loadingService.emitChange(false);
-                const dialog = this.dialogService.addDialog(ConfirmComponent, { title: 'Lỗi',
+                const dialog = this.dialogService.addDialog(ConfirmComponent, {
+                    title: 'Lỗi',
                     message: `Bạn đã tạo tài khoản email thành công, nhưng có lỗi trong việc lưu thông tin dự thi. ' +
-                    'Hãy kiểm tra hòm thư để có thêm thông tin` });
+                    'Hãy kiểm tra hòm thư để có thêm thông tin`
+                });
             });
         }).catch((error: firebase.FirebaseError) => {
             // Create user account failed
@@ -94,10 +105,13 @@ export class RegisterComponent implements OnInit {
                     break;
                 }
             }
-            const dialog = this.dialogService.addDialog(ConfirmComponent, { title: 'Lỗi',
-                message: strCode });
+            const dialog = this.dialogService.addDialog(ConfirmComponent, {
+                title: 'Lỗi',
+                message: strCode
+            });
         });
     }
+
     showConfirm() {
         const disposable = this.dialogService.addDialog(ConfirmComponent, {
             title: 'Confirm title',
@@ -111,6 +125,10 @@ export class RegisterComponent implements OnInit {
                     alert('declined');
                 }
             });
+    }
+
+    gotoHome(): void {
+        this.router.navigate(['home']);
     }
 
 }
