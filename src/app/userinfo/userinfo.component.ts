@@ -29,7 +29,7 @@ export class UserInfoComponent implements OnInit {
             if (user) {
                 this.verifiedText = user.emailVerified ? '' : '(Email này chưa được xác nhận, hãy kiểm tra hòm thư và xác nhận)';
                 // there is an user login
-                this.db.object('finalUsers/' + user.uid, {preserveSnapshot: false}).subscribe((snapshot) => {
+                this.db.object('users/' + user.uid, {preserveSnapshot: false}).subscribe((snapshot) => {
                     this.user = snapshot;
                     // console.log(this.user);
                 });
@@ -47,7 +47,7 @@ export class UserInfoComponent implements OnInit {
 
     onSubmit(): void {
         this._loadingService.emitChange(true);
-        this.db.object('finalUsers/' + this.firebaseUser.uid).update(this.user).then(() => {
+        this.db.object('users/' + this.firebaseUser.uid).update(this.user).then(() => {
             // update user successfully
             this._loadingService.emitChange(false);
             const dialog = this.dialogService.addDialog(ConfirmComponent, {

@@ -24,7 +24,7 @@ export class UsersListComponent implements OnInit {
 
     constructor(private db: AngularFireDatabase, private _loadingService: LoadingService,
                 private afAuth: AngularFireAuth, private dialogService: DialogService,
-                private router: Router, private excelService: ExcelService) {
+                private excelService: ExcelService) {
     }
 
     ngOnInit(): void {

@@ -10,13 +10,8 @@ import {AngularFireAuth} from 'angularfire2/auth';
     templateUrl: 'app.component.html',
 })
 export class AppComponent {
-    @Input() isAppLoading = false;
+    constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth) {
 
-    constructor(private db: AngularFireDatabase, private _sharedService: LoadingService, private afAuth: AngularFireAuth) {
-        _sharedService.changeEmitted$.subscribe(
-            value => {
-                this.isAppLoading = value;
-            });
         this.afAuth.auth.onAuthStateChanged(user => {
             if (user) {
                 if (user.emailVerified) {

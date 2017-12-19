@@ -16,7 +16,7 @@ const routes: Routes = [
     /*{path: '', redirectTo: '/register', pathMatch: 'full'},*/
     {path: '', component: HomeComponent},
     {path: 'home', component: HomeComponent},
-    {path: 'userslist', component: FinalUsersListComponent},
+    {path: 'userslist', component: UsersListComponent},
     {path: 'database', component: DatabaseComponent},
     {path: 'register', component: RegisterComponent},
     {
@@ -33,9 +33,6 @@ const routes: Routes = [
     },
     {
         path: 'handleemail', component: HandleEmailComponent
-    },
-    {
-        path: 'final', component: FinalUsersListComponent
     }
     /*{ path: 'heroes',     component: HeroesComponent },
      { path: 'admin', component: Admin}*/
