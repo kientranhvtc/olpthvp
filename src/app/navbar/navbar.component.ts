@@ -35,14 +35,6 @@ export class NavbarComponent {
         this.afAuth.auth.signOut();
     }
 
-    gotoPage(page: string) {
-        this.router.navigate([page]);
-    }
-
-    toggleCollapse(): void {
-        // this.show = !this.show;
-    }
-
     close_Navbar(): void {
         // document.documentElement.classList.remove('nav-open');
         if (document.getElementsByClassName('has-image').length > 0) {
@@ -50,9 +42,3 @@ export class NavbarComponent {
         }
     }
 }
-
-// navbar-collapse justify-content-end collapse
-// collapse navbar-collapse justify-content-end has-image
-// navbar-collapse justify-content-end has-image collapse show
-// navbar-collapse justify-content-end has-image collapse show
-

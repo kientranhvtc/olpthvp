@@ -1,0 +1,22 @@
+{
+  "rules": {
+    "rooms": {
+      ".read": "true",
+      ".write": "root.child('users').child(auth.uid).child('role').val()=='admin'"
+    },
+    "sections": {
+      ".read": "true",
+      ".write": "root.child('users').child(auth.uid).child('role').val()=='admin'"
+    },
+    "users": {
+      ".read":"true",
+      "$uid": {
+        ".write": "auth.uid==$uid || root.child('users').child(auth.uid).child('role').val()=='admin'"
+      },
+      ".indexOn": "email"
+    },
+    "final": {
+      ".read":"true"
+    }
+  }
+}
